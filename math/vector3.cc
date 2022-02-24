@@ -50,13 +50,13 @@ Vector3 Vector3::operator*(const Vector3 &v) const
     return Vector3(pos_ * v.getPosition());
 }
 
-Vector3 Vector3::operator*(const Vector3 &v) const
+Vector3 Vector3::operator/(const Vector3 &v) const
 {
-    return Vector3(pos_ * v.getPosition());
+    return Vector3(pos_ / v.getPosition());
 }
 
 ostream &operator<<(ostream &out, Vector3 &vect3)
 {
     Point3 pos = vect3.getPosition();
-    cout << "Vect3(" << pos << ")\n";
+    return out << "Vect3(" << pos << ")\n";
 }

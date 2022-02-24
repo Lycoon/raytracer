@@ -36,11 +36,14 @@ float Camera::getZMin() const
 // Print
 ostream &operator<<(ostream &out, Camera &cam)
 {
-    cout << "Camera(" << endl
-         << "center=" << cam.getCenter() << ",\n"
-         << "direction=" << cam.getDirection() << ", \n"
-         << "up=" << cam.getUp() << ", \n"
-         << "fovX=" << cam.getFovX() << ", \n"
-         << "fovY=" << cam.getFovY() << ", \n"
-         << "zMin=" << cam.getZMin() << "\n)";
+    /*
+    return out << "Camera(" << endl
+               << "center=" << cam.getCenter() << ",\n"
+               << "direction=" << cam.getDirection() << ", \n"
+               << "up=" << cam.getUp() << ", \n"
+               << "fovX=" << cam.getFovX() << ", \n"
+               << "fovY=" << cam.getFovY() << ", \n"
+               << "zMin=" << cam.getZMin() << "\n)";
+               */
+    return out;
 }

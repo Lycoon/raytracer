@@ -5,6 +5,6 @@
 // Print
 ostream &operator<<(ostream &out, Color &color)
 {
-    cout << "Color(r=" << color.getRed() << ", g=" << color.getGreen()
-         << ", b=" << color.getBlue() << ")";
+    return out << "Color(r=" << color.getRed() << ", g=" << color.getGreen()
+               << ", b=" << color.getBlue() << ")";
 }

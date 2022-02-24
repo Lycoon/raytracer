@@ -63,6 +63,6 @@ Point3 Point3::operator/(const Point3 &p) const
 // Print
 ostream &operator<<(ostream &out, Point3 &p)
 {
-    cout << "Point3(x=" << p.getX() << ", y=" << p.getY() << ", z=" << p.getZ()
-         << ")";
+    return out << "Point3(x=" << p.getX() << ", y=" << p.getY()
+               << ", z=" << p.getZ() << ")";
 }
