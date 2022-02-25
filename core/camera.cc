@@ -70,14 +70,21 @@ void Camera::updateFovY()
 // Print
 ostream &operator<<(ostream &out, Camera &cam)
 {
-    /*
+    Point3 center = cam.getCenter();
+    Point3 direction = cam.getDirection();
+    Vector3 up = cam.getUp();
+    float fovX = cam.getFovX();
+    float fovY = cam.getFovY();
+    float zMin = cam.getZMin();
+
     return out << "Camera(" << endl
-               << "center=" << cam.getCenter() << ",\n"
-               << "direction=" << cam.getDirection() << ", \n"
-               << "up=" << cam.getUp() << ", \n"
-               << "fovX=" << cam.getFovX() << ", \n"
-               << "fovY=" << cam.getFovY() << ", \n"
-               << "zMin=" << cam.getZMin() << "\n)";
-               */
+               << "  center=" << center << ",\n"
+               << "  direction=" << direction << ", \n"
+               << "  up=" << up << ", \n"
+               << "  fovX=" << fovX << ", \n"
+               << "  fovY=" << fovY << ", \n"
+               << "  zMin=" << zMin << endl
+               << ")";
+
     return out;
 }

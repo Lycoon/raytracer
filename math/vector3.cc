@@ -4,12 +4,12 @@
 
 Vector3 Vector3::cross(const Vector3 &v) const
 {
-    Point3 pos1 = getPosition();
-    Point3 pos2 = v.getPosition();
+    Point3 posA = getPosition();
+    Point3 posB = v.getPosition();
 
-    float crossX = pos1.getY() * pos2.getZ() - pos1.getZ() * pos2.getY();
-    float crossY = -pos1.getX() * pos2.getZ() + pos1.getZ() * pos2.getX();
-    float crossZ = pos1.getX() * pos2.getY() - pos1.getY() * pos2.getX();
+    float crossX = posA.getY() * posB.getZ() - posA.getZ() * posB.getY();
+    float crossY = -posA.getX() * posB.getZ() + posA.getZ() * posB.getX();
+    float crossZ = posA.getX() * posB.getY() - posA.getY() * posB.getX();
 
     return Vector3(crossX, crossY, crossZ);
 }
@@ -32,11 +32,10 @@ float Vector3::magnitude() const
 void Vector3::normalize()
 {
     float mag = magnitude();
-    float x = pos_.getX();
-    float y = pos_.getY();
-    float z = pos_.getZ();
+    if (mag == 0.0)
+        return;
 
-    pos_ = Point3(x / mag, y / mag, z / mag);
+    pos_ = pos_ / mag;
 }
 
 void Vector3::setPosition(Point3 newPos)
