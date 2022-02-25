@@ -2,9 +2,29 @@
 
 #include <iostream>
 
+const int Color::getRed() const
+{
+    return r_;
+}
+
+const int Color::getGreen() const
+{
+    return g_;
+}
+
+const int Color::getBlue() const
+{
+    return b_;
+}
+
 // Print
 ostream &operator<<(ostream &out, Color &color)
 {
-    return out << "Color(r=" << color.getRed() << ", g=" << color.getGreen()
-               << ", b=" << color.getBlue() << ")";
+    out << "Color(" << endl
+        << "  r = " << color.getRed() << "," << endl
+        << "  g = " << color.getGreen() << "," << endl
+        << "  b = " << color.getBlue() << endl
+        << ")";
+
+    return out;
 }

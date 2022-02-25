@@ -8,22 +8,20 @@ class Color
 {
 public:
     Color(int red, int green, int blue)
-        : r_(red)
-        , g_(green)
-        , b_(blue)
-    {}
+        : r_(red), g_(green), b_(blue)
+    {
+    }
     Color()
-        : r_(0)
-        , g_(0)
-        , b_(0)
-    {}
+        : r_(0), g_(0), b_(0)
+    {
+    }
 
-    int getRed() const;
-    int getGreen() const;
-    int getBlue() const;
-
-    friend ostream &operator<<(ostream &out, Color &color);
+    const int getRed() const;
+    const int getGreen() const;
+    const int getBlue() const;
 
 private:
     int r_, g_, b_;
 };
+
+ostream &operator<<(ostream &out, Color &color);

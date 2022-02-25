@@ -16,6 +16,8 @@ file(GLOB all_SRCS
         "core/*.cc"
         "graphics/*.cc"
         "math/*.cc"
+
+        main.cc
 )
 
 add_executable(raytracer ${all_SRCS})

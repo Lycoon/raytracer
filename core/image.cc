@@ -2,6 +2,21 @@
 
 #include <iostream>
 
+const int Image::getWidth() const
+{
+    return width_;
+}
+
+const int Image::getHeight() const
+{
+    return height_;
+}
+
+const vector<vector<Color>> &Image::getPixels() const
+{
+    return pixels_;
+}
+
 // Print
 ostream &operator<<(ostream &out, Image &img)
 {

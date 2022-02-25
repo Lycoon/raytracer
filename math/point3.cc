@@ -10,7 +10,7 @@ float Point3::getX() const
 
 float Point3::getY() const
 {
-    return x_;
+    return y_;
 }
 
 float Point3::getZ() const
