@@ -2,10 +2,10 @@
 
 #include "../../core/include/texture-material.hh"
 
-class UniformTexture : TextureMaterial
+class UniformTexture : public TextureMaterial
 {
 public:
-    std::vector<float> getPos(Point3 p) const;
+    vector<float> getComponents(Point3 p) const;
 
 private:
 };

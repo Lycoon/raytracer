@@ -7,8 +7,7 @@
 class TextureMaterial
 {
 public:
-    // should be pure virtual
-    // virtual std::vector<float> getPos(Point3 p) const;
+    virtual vector<float> getComponents(Point3 p) const = 0;
 
 private:
 };

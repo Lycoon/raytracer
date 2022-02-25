@@ -46,15 +46,13 @@ float Sphere::doesIntersect(Ray ray)
 
 Vector3 Sphere::getNormal(Point3 p)
 {
-    return Vector3();
+    return p - center_;
 }
 
-/*
-TextureMaterial Sphere::getTexture(Point3 p)
+vector<float> Sphere::getTexture(Point3 p)
 {
-    return TextureMaterial();
+    return texture_->getComponents(p);
 }
-*/
 
 ostream &operator<<(ostream &out, Sphere &sphere)
 {

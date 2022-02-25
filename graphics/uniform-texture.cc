@@ -1,6 +1,6 @@
 #include "include/uniform-texture.hh"
 
-std::vector<float> UniformTexture::getPos(Point3 p) const
+vector<float> UniformTexture::getComponents(Point3 p) const
 {
-    return std::vector<float>{0};
+    return vector<float>{0.5, 0.3, 1};
 }

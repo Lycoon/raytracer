@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-class Sphere : SceneObject
+class Sphere : public SceneObject
 {
 public:
     Sphere(float radius, Point3 center = Point3(0, 0, 0))
@@ -17,7 +17,7 @@ public:
 
     float doesIntersect(Ray ray);
     Vector3 getNormal(Point3 p);
-    // TextureMaterial getTexture(Point3 p);
+    vector<float> getTexture(Point3 p);
 
 private:
     Point3 center_;

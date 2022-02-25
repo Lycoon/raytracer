@@ -17,6 +17,26 @@ const vector<vector<Color>> &Image::getPixels() const
     return pixels_;
 }
 
+void Image::save(string name) const {
+    ofstream img(name);
+
+    img << "P6" << endl;
+    img << width_ << " " << height_ << endl;
+    img << "256" << endl;
+
+    for (int y = 0; y < height_; y++)
+    {
+        for (int x = 0; x < width_; x++)
+        {
+            Color px = pixels_[y][x];
+
+            img << px.getRed() << " " << px.getGreen() << " " << px.getBlue() << "\n";
+        }
+    }
+
+    img.close();
+}
+
 // Print
 ostream &operator<<(ostream &out, Image &img)
 {
