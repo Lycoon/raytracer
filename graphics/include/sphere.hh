@@ -15,7 +15,7 @@ public:
     const Point3 &getCenter() const;
     const float getRadius() const;
 
-    float doesIntersect(Point3 startPoint, Vector3 direction);
+    float doesIntersect(Ray ray);
     Vector3 getNormal(Point3 p);
     // TextureMaterial getTexture(Point3 p);
 

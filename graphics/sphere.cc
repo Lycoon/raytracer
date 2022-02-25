@@ -19,12 +19,12 @@ const float Sphere::getRadius() const
  * @param direction
  * @return float
  */
-float Sphere::doesIntersect(Point3 startPoint, Vector3 direction)
+float Sphere::doesIntersect(Ray ray)
 {
-    Vector3 oc = startPoint - center_;
+    Vector3 oc = ray.getOrigin() - center_;
 
-    float a = direction.dot(direction);
-    float b = 2.0 * oc.dot(direction);
+    float a = ray.getDirection().dot(ray.getDirection());
+    float b = 2.0 * oc.dot(ray.getDirection());
     float c = oc.dot(oc) - radius_ * radius_;
 
     float delta = b * b - 4 * a * c;
@@ -62,7 +62,7 @@ ostream &operator<<(ostream &out, Sphere &sphere)
 
     out << "Sphere(" << endl
         << "  center = " << center << "," << endl
-        << "  radius = " << sphere.getRadius() << "," << endl
+        << "  radius = " << sphere.getRadius() << endl
         << ")";
 
     return out;
