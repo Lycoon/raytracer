@@ -1,3 +1,0 @@
-/home/lycoon/image_s8/tp1-isim/CMakeFiles/rebuild_cache.dir
-/home/lycoon/image_s8/tp1-isim/CMakeFiles/edit_cache.dir
-/home/lycoon/image_s8/tp1-isim/CMakeFiles/raytracer.dir
