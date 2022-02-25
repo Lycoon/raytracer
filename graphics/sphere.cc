@@ -1,4 +1,5 @@
 #include "include/sphere.hh"
+
 #include "include/uniform-texture.hh"
 
 const Point3 &Sphere::getCenter() const
@@ -12,8 +13,8 @@ const float Sphere::getRadius() const
 }
 
 /**
- * @brief Checks whether a ray hits a sphere by returning its distance to the hit
- * -1 if no intersection found
+ * @brief Checks whether a ray hits a sphere by returning its distance to the
+ * hit -1 if no intersection found
  *
  * @param startPoint
  * @param direction

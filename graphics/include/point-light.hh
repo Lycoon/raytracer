@@ -2,5 +2,10 @@
 
 #include "../../core/include/light.hh"
 
-class PointLight : Light
-{};
+class PointLight : public Light
+{
+public:
+    PointLight(Point3 pos)
+        : Light(pos)
+    {}
+};

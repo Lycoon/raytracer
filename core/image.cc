@@ -17,7 +17,13 @@ const vector<vector<Color>> &Image::getPixels() const
     return pixels_;
 }
 
-void Image::save(string name) const {
+void Image::setPixel(int x, int y, Color color)
+{
+    pixels_[y][x] = color;
+}
+
+void Image::save(string name) const
+{
     ofstream img(name);
 
     img << "P6" << endl;
@@ -30,7 +36,8 @@ void Image::save(string name) const {
         {
             Color px = pixels_[y][x];
 
-            img << px.getRed() << " " << px.getGreen() << " " << px.getBlue() << "\n";
+            img << px.getRed() << " " << px.getGreen() << " " << px.getBlue()
+                << "\n";
         }
     }
 

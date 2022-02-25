@@ -13,6 +13,18 @@ float Vector3::dot(const Vector3 &v) const
     return prod.getX() + prod.getY() + prod.getZ();
 }
 
+Vector3 Vector3::cross(const Vector3 &v) const
+{
+    Point3 pos1 = getPosition();
+    Point3 pos2 = v.getPosition();
+
+    float crossX = pos1.getY() * pos2.getZ() - pos1.getZ() * pos2.getY();
+    float crossY = -pos1.getX() * pos2.getZ() + pos1.getZ() * pos2.getX();
+    float crossZ = pos1.getX() * pos2.getY() - pos1.getY() * pos2.getX();
+
+    return Vector3(crossX, crossY, crossZ);
+}
+
 // Float operations
 Vector3 Vector3::operator+(const float &l) const
 {

@@ -8,6 +8,4 @@ class TextureMaterial
 {
 public:
     virtual vector<float> getComponents(Point3 p) const = 0;
-
-private:
 };

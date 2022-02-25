@@ -17,6 +17,7 @@ public:
 
     Point3 getPosition() const;
     float dot(const Vector3 &v) const;
+    float cross(const Vector3 &v) const;
 
     Vector3 operator+(const Vector3 &v) const;
     Vector3 operator-(const Vector3 &v) const;

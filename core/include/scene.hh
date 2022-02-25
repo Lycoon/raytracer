@@ -3,26 +3,30 @@
 #include <vector>
 
 #include "camera.hh"
+#include "image.hh"
 #include "light.hh"
 #include "scene-object.hh"
 
 class Scene
 {
 public:
-    Scene(vector<SceneObject> objects, vector<Light> lights, Camera camera) : objs_(objects), lights_(lights), camera_(camera)
-    {
-    }
+    Scene(vector<SceneObject *> objects, vector<Light *> lights, Camera camera)
+        : objs_(objects)
+        , lights_(lights)
+        , camera_(camera)
+    {}
 
-    const vector<SceneObject> getObjects() const;
-    const vector<Light> getLights() const;
+    const vector<SceneObject *> getObjects() const;
+    const vector<Light *> getLights() const;
     const Camera getCamera() const;
+    Image draw(int width, int height);
 
-    void addObject(SceneObject object);
-    void addLight(Light light);
+    void addObject(SceneObject *object);
+    void addLight(Light *light);
     void setCamera(Camera camera);
 
 private:
-    vector<SceneObject> objs_;
-    vector<Light> lights_;
+    vector<SceneObject *> objs_;
+    vector<Light *> lights_;
     Camera camera_;
 };

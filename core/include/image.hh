@@ -12,7 +12,8 @@ class Image
 {
 public:
     Image(int width, int height)
-        : width_(width), height_(height)
+        : width_(width)
+        , height_(height)
     {
         auto line = vector<Color>(width, Color(0, 128, 54));
         pixels_ = vector<vector<Color>>(height, line);
@@ -21,6 +22,7 @@ public:
     const int getWidth() const;
     const int getHeight() const;
     const vector<vector<Color>> &getPixels() const;
+    void setPixel(int x, int y, Color color);
     void save(string name) const;
 
 private:
