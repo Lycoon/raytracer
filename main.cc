@@ -32,11 +32,12 @@ int main(int argc, char const *argv[])
 
     auto objects = vector<SceneObject *>{ &sphere };
     auto lights = vector<Light *>{ &pointLight };
-    auto camera = Camera();
+    auto camera =
+        Camera(Point3(0, 0, 0), Point3(0, 0, 1), Vector3(1, 0, 0), 800, 600);
 
     Scene scene(objects, lights, camera);
 
-    Image image = scene.draw(800, 600);
+    Image image = scene.draw();
     image.save("output.ppm");
 
     return 0;

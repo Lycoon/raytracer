@@ -18,6 +18,16 @@ Vector3 Camera::getUp() const
     return up_;
 }
 
+int Camera::getWidth() const
+{
+    return width_;
+}
+
+int Camera::getHeight() const
+{
+    return height_;
+}
+
 float Camera::getFovX() const
 {
     return fovX_;

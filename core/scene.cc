@@ -30,13 +30,16 @@ void Scene::setCamera(Camera camera)
     camera_ = camera;
 }
 
-Image Scene::draw(int width, int height)
+Image Scene::draw()
 {
-    Image image(width, height);
+    int w = camera_.getWidth();
+    int h = camera_.getHeight();
 
-    for (int y = 0; y < height; y++)
+    Image image(w, h);
+
+    for (int y = 0; y < h; y++)
     {
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < w; x++)
         {
             Color pixel(128, 128, 128);
             image.setPixel(x, y, pixel);
