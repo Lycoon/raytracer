@@ -43,6 +43,30 @@ float Camera::getZMin() const
     return zMin_;
 }
 
+// Setters
+void Camera::setFovX(float newFovX)
+{
+    fovX_ = newFovX;
+    updateFovY();
+}
+
+void Camera::setHeight(int newHeight)
+{
+    height_ = newHeight;
+    updateFovY();
+}
+
+void Camera::setWidth(int newWidth)
+{
+    width_ = newWidth;
+    updateFovY();
+}
+
+void Camera::updateFovY()
+{
+    fovY_ = fovX_ / (width_ / height_);
+}
+
 // Print
 ostream &operator<<(ostream &out, Camera &cam)
 {

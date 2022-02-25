@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <ostream>
 
 #include "point3.hh"
@@ -15,10 +16,13 @@ public:
     Vector3(float x, float y, float z)
         : pos_(Point3(x, y, z)){};
 
-    Point3 getPosition() const;
-    float dot(const Vector3 &v) const;
     Vector3 cross(const Vector3 &v) const;
+    float dot(const Vector3 &v) const;
+    float magnitude() const;
+    void normalize();
 
+    void setPosition(Point3 newPos);
+    Point3 getPosition() const;
     Vector3 operator+(const Vector3 &v) const;
     Vector3 operator-(const Vector3 &v) const;
     Vector3 operator*(const Vector3 &v) const;

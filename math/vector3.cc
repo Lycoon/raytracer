@@ -2,17 +2,6 @@
 
 #include <iostream>
 
-Point3 Vector3::getPosition() const
-{
-    return pos_;
-}
-
-float Vector3::dot(const Vector3 &v) const
-{
-    Point3 prod = pos_ * v.getPosition();
-    return prod.getX() + prod.getY() + prod.getZ();
-}
-
 Vector3 Vector3::cross(const Vector3 &v) const
 {
     Point3 pos1 = getPosition();
@@ -23,6 +12,41 @@ Vector3 Vector3::cross(const Vector3 &v) const
     float crossZ = pos1.getX() * pos2.getY() - pos1.getY() * pos2.getX();
 
     return Vector3(crossX, crossY, crossZ);
+}
+
+float Vector3::dot(const Vector3 &v) const
+{
+    Point3 prod = pos_ * v.getPosition();
+    return prod.getX() + prod.getY() + prod.getZ();
+}
+
+float Vector3::magnitude() const
+{
+    float x = pos_.getX();
+    float y = pos_.getY();
+    float z = pos_.getZ();
+
+    return sqrt(x * x + y * y + z * z);
+}
+
+void Vector3::normalize()
+{
+    float mag = magnitude();
+    float x = pos_.getX();
+    float y = pos_.getY();
+    float z = pos_.getZ();
+
+    pos_ = Point3(x / mag, y / mag, z / mag);
+}
+
+void Vector3::setPosition(Point3 newPos)
+{
+    pos_ = newPos;
+}
+
+Point3 Vector3::getPosition() const
+{
+    return pos_;
 }
 
 // Float operations

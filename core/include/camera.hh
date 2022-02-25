@@ -15,8 +15,14 @@ public:
         , height_(height)
         , width_(width)
         , fovX_(90)
-        , fovY_(fovX / (width / height))
-    {}
+    {
+        updateFovY();
+    }
+
+    void setFovX(float newFovX);
+    void setHeight(int newHeight);
+    void setWidth(int newWidth);
+    void updateFovY();
 
     Point3 getCenter() const;
     Point3 getDirection() const;
