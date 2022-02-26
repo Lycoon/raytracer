@@ -8,14 +8,19 @@ Point3 Camera::getCenter() const
     return center_;
 }
 
-Point3 Camera::getDirection() const
+Vector3 Camera::getForward() const
 {
-    return direction_;
+    return forward_;
 }
 
 Vector3 Camera::getUp() const
 {
     return up_;
+}
+
+Vector3 Camera::getRight() const
+{
+    return right_;
 }
 
 int Camera::getWidth() const
@@ -71,7 +76,7 @@ void Camera::updateFovY()
 ostream &operator<<(ostream &out, Camera &cam)
 {
     Point3 center = cam.getCenter();
-    Point3 direction = cam.getDirection();
+    Vector3 forward = cam.getForward();
     Vector3 up = cam.getUp();
     float fovX = cam.getFovX();
     float fovY = cam.getFovY();
@@ -79,7 +84,7 @@ ostream &operator<<(ostream &out, Camera &cam)
 
     return out << "Camera(" << endl
                << "  center = " << center << ",\n"
-               << "  direction = " << direction << ", \n"
+               << "  direction = " << forward << ", \n"
                << "  up = " << up << ", \n"
                << "  fovX = " << fovX << ", \n"
                << "  fovY = " << fovY << ", \n"

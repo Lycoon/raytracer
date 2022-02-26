@@ -1,23 +1,24 @@
 #pragma once
 
-#include "../../core/include/scene-object.hh"
-
 #include <cmath>
+
+#include "../../core/include/scene-object.hh"
 
 class Sphere : public SceneObject
 {
 public:
-    Sphere(float radius, Point3 center = Point3(0, 0, 0))
-        : center_(center), radius_(radius)
-    {
-    }
+    Sphere(float radius, Point3 center, UniformTexture *texture)
+        : SceneObject(texture)
+        , radius_(radius)
+        , center_(center)
+    {}
 
     const Point3 &getCenter() const;
     const float getRadius() const;
 
     float doesIntersect(Ray ray);
     Vector3 getNormal(Point3 p);
-    vector<float> getTexture(Point3 p);
+    TextureMaterial *getTexture(Point3 p);
 
 private:
     Point3 center_;

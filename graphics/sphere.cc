@@ -50,9 +50,9 @@ Vector3 Sphere::getNormal(Point3 p)
     return p - center_;
 }
 
-vector<float> Sphere::getTexture(Point3 p)
+TextureMaterial *Sphere::getTexture(Point3 p)
 {
-    return texture_->getComponents(p);
+    return texture_;
 }
 
 ostream &operator<<(ostream &out, Sphere &sphere)

@@ -13,13 +13,14 @@ public:
     Scene(vector<SceneObject *> objects, vector<Light *> lights, Camera camera)
         : objs_(objects)
         , lights_(lights)
-        , camera_(camera)
+        , cam_(camera)
     {}
 
     const vector<SceneObject *> getObjects() const;
     const vector<Light *> getLights() const;
     const Camera getCamera() const;
     Image draw();
+    void castRay();
 
     void addObject(SceneObject *object);
     void addLight(Light *light);
@@ -28,5 +29,5 @@ public:
 private:
     vector<SceneObject *> objs_;
     vector<Light *> lights_;
-    Camera camera_;
+    Camera cam_;
 };

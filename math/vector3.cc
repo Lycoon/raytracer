@@ -8,7 +8,7 @@ Vector3 Vector3::cross(const Vector3 &v) const
     Point3 posB = v.getPosition();
 
     float crossX = posA.getY() * posB.getZ() - posA.getZ() * posB.getY();
-    float crossY = -posA.getX() * posB.getZ() + posA.getZ() * posB.getX();
+    float crossY = posA.getZ() * posB.getX() - posA.getX() * posB.getZ();
     float crossZ = posA.getX() * posB.getY() - posA.getY() * posB.getX();
 
     return Vector3(crossX, crossY, crossZ);
@@ -36,6 +36,18 @@ void Vector3::normalize()
         return;
 
     pos_ = pos_ / mag;
+}
+
+Vector3 Vector3::rotate(Vector3 axis, float angle)
+{
+    float rad = M_PI * (angle / 180.0);
+    axis.normalize();
+
+    Vector3 a = *this * cos(rad);
+    Vector3 b = (axis.cross(*this) * sin(rad));
+    Vector3 c = axis * (axis.dot(*this)) * (1.0 - cos(rad));
+
+    return a + b + c;
 }
 
 void Vector3::setPosition(Point3 newPos)

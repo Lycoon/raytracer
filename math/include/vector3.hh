@@ -20,6 +20,7 @@ public:
     float dot(const Vector3 &v) const;
     float magnitude() const;
     void normalize();
+    Vector3 rotate(Vector3 axis, float angle);
 
     void setPosition(Point3 newPos);
     Point3 getPosition() const;

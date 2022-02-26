@@ -26,9 +26,9 @@ void Image::save(string name) const
 {
     ofstream img(name + ".ppm");
 
-    img << "P6" << endl;
+    img << "P3" << endl;
     img << width_ << " " << height_ << endl;
-    img << "256" << endl;
+    img << "255" << endl;
 
     for (int y = 0; y < height_; y++)
     {

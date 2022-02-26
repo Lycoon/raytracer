@@ -17,7 +17,7 @@ public:
     float getY() const;
     float getZ() const;
 
-    Point3 operator+(const Point3 &l) const;
+    Point3 operator+(const Point3 &p) const;
     Point3 operator-(const Point3 &p) const;
     Point3 operator*(const Point3 &p) const;
     Point3 operator/(const Point3 &p) const;

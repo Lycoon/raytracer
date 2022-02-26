@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "include/vector3.hh"
+
 // Getters
 float Point3::getX() const
 {

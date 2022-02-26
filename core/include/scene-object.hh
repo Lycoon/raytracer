@@ -10,13 +10,13 @@ using namespace std;
 class SceneObject
 {
 public:
-    SceneObject()
-        : texture_(new UniformTexture())
+    SceneObject(TextureMaterial *texture)
+        : texture_(texture)
     {}
 
     virtual float doesIntersect(Ray ray) = 0;
     virtual Vector3 getNormal(Point3 p) = 0;
-    virtual vector<float> getTexture(Point3 p) = 0;
+    virtual TextureMaterial *getTexture(Point3 p) = 0;
 
 protected:
     TextureMaterial *texture_;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "../../math/include/vector3.hh"
 
 using namespace std;
@@ -7,17 +9,21 @@ using namespace std;
 class Camera
 {
 public:
-    Camera(Point3 center, Point3 direction, Vector3 up, int width, int height,
+    Camera(Point3 center, Vector3 forward, Vector3 up, int width, int height,
            float fovX = 90)
         : center_(center)
-        , direction_(direction)
+        , forward_(forward)
         , up_(up)
         , height_(height)
         , width_(width)
-        , fovX_(90)
+        , fovX_(fovX)
         , zMin_(0)
     {
         updateFovY();
+
+        up_.normalize();
+        forward_.normalize();
+        right_ = up_.cross(forward_);
     }
 
     void setFovX(float newFovX);
@@ -26,8 +32,9 @@ public:
     void updateFovY();
 
     Point3 getCenter() const;
-    Point3 getDirection() const;
+    Vector3 getForward() const;
     Vector3 getUp() const;
+    Vector3 getRight() const;
     int getWidth() const;
     int getHeight() const;
     float getFovX() const;
@@ -35,8 +42,8 @@ public:
     float getZMin() const;
 
 private:
-    Point3 center_, direction_;
-    Vector3 up_;
+    Point3 center_;
+    Vector3 forward_, up_, right_;
     float fovX_, fovY_, zMin_;
     int width_, height_;
 };

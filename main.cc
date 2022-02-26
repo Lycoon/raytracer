@@ -7,8 +7,8 @@
 
 using namespace std;
 
-#define DEFAULT_WIDTH 800
-#define DEFAULT_HEIGHT 600
+#define DEFAULT_WIDTH 512
+#define DEFAULT_HEIGHT 512
 #define DEFAULT_FOV 90
 #define DEFAULT_OUTPUT_NAME "output"
 
@@ -24,17 +24,23 @@ int main(int argc, char const *argv[])
     string outputName = argc >= 5 ? argv[4] : DEFAULT_OUTPUT_NAME;
 
     // Creating objects
-    auto sphere = Sphere(5, Point3(15, 0, 0));
+    auto red = UniformTexture(Color(255, 0, 0));
+    auto blue = UniformTexture(Color(0, 0, 255));
+    auto green = UniformTexture(Color(0, 255, 0));
+
+    auto sphereRed = Sphere(1, Point3(3, 0, 0), &red);
+    auto sphereBlue = Sphere(1, Point3(5, 2, 1), &blue);
+    auto sphereGreen = Sphere(1.5, Point3(5, -1.5, -2), &green);
     auto pointLight = PointLight(Point3(0, 0, 0));
 
-    auto objects = vector<SceneObject *>{ &sphere };
+    auto objects =
+        vector<SceneObject *>{ &sphereRed, &sphereBlue, &sphereGreen };
     auto lights = vector<Light *>{};
 
     Point3 cameraPos = Point3(0, 0, 0);
-    Point3 cameraDir = Point3(0, 0, 1);
-    Vector3 cameraUp = Vector3(1, 0, 0);
+    Vector3 cameraDir = Vector3(1, 0, 0);
+    Vector3 cameraUp = Vector3(0, 0, 1);
     auto camera = Camera(cameraPos, cameraDir, cameraUp, width, height, fov);
-    camera.updateFovY();
     cout << camera << endl;
 
     // Creating scene
@@ -48,7 +54,9 @@ int main(int argc, char const *argv[])
 
 void test()
 {
-    Sphere sphere(1, Point3(2, 2, 2));
+    auto texture = UniformTexture(Color(0, 0, 255));
+
+    Sphere sphere(1, Point3(2, 2, 2), &texture);
     cout << sphere << "\n\n";
 
     Point3 rayOrigin(0, 0, 0);
