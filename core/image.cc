@@ -24,7 +24,7 @@ void Image::setPixel(int x, int y, Color color)
 
 void Image::save(string name) const
 {
-    ofstream img(name);
+    ofstream img(name + ".ppm");
 
     img << "P6" << endl;
     img << width_ << " " << height_ << endl;

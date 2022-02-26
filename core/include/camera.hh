@@ -39,3 +39,5 @@ private:
     float fovX_, fovY_, zMin_;
     int width_, height_;
 };
+
+ostream &operator<<(ostream &out, Camera &cam);
