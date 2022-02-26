@@ -30,8 +30,8 @@ int main(int argc, char const *argv[])
 
     auto sphereRed = Sphere(1, Point3(3, 0, 0), &red);
     auto sphereBlue = Sphere(1, Point3(5, 2, 1), &blue);
-    auto sphereGreen = Sphere(1.5, Point3(5, -1.5, -2), &green);
-    auto pointLight = PointLight(Point3(0, 0, 0));
+    auto sphereGreen = Sphere(1.5, Point3(2, -4, -2), &green);
+    auto pointLight = PointLight(Point3(0, 0, 0), 0.7);
 
     auto objects =
         vector<SceneObject *>{ &sphereRed, &sphereBlue, &sphereGreen };
