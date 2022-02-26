@@ -93,5 +93,5 @@ Vector3 Vector3::operator/(const Vector3 &v) const
 ostream &operator<<(ostream &out, Vector3 &vect3)
 {
     Point3 pos = vect3.getPosition();
-    return out << "Vect3(" << pos << ")\n";
+    return out << "Vect3(" << pos << ")";
 }

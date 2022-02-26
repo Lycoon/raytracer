@@ -64,7 +64,7 @@ void Camera::setWidth(int newWidth)
 
 void Camera::updateFovY()
 {
-    fovY_ = fovX_ / (width_ / height_);
+    fovY_ = fovX_ / ((float)width_ / (float)height_);
 }
 
 // Print
@@ -78,12 +78,12 @@ ostream &operator<<(ostream &out, Camera &cam)
     float zMin = cam.getZMin();
 
     return out << "Camera(" << endl
-               << "  center=" << center << ",\n"
-               << "  direction=" << direction << ", \n"
-               << "  up=" << up << ", \n"
-               << "  fovX=" << fovX << ", \n"
-               << "  fovY=" << fovY << ", \n"
-               << "  zMin=" << zMin << endl
+               << "  center = " << center << ",\n"
+               << "  direction = " << direction << ", \n"
+               << "  up = " << up << ", \n"
+               << "  fovX = " << fovX << ", \n"
+               << "  fovY = " << fovY << ", \n"
+               << "  zMin = " << zMin << endl
                << ")";
 
     return out;

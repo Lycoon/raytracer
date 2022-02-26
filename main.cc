@@ -34,6 +34,8 @@ int main(int argc, char const *argv[])
     Point3 cameraDir = Point3(0, 0, 1);
     Vector3 cameraUp = Vector3(1, 0, 0);
     auto camera = Camera(cameraPos, cameraDir, cameraUp, width, height, fov);
+    camera.updateFovY();
+    cout << camera << endl;
 
     // Creating scene
     Scene scene(objects, lights, camera);

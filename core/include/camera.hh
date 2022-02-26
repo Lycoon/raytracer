@@ -15,6 +15,7 @@ public:
         , height_(height)
         , width_(width)
         , fovX_(90)
+        , zMin_(0)
     {
         updateFovY();
     }
