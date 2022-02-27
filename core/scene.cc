@@ -101,8 +101,7 @@ Image Scene::draw()
                 {
                     minDst = dst;
                     closestObject = obj;
-                    hit = ray.getOrigin()
-                        + ray.getDirection().getPosition() * dst;
+                    hit = ray.getOrigin() + ray.getDirection().getPosition() * dst;
                 }
             }
 
@@ -122,12 +121,12 @@ Image Scene::draw()
                     diffuse += computeDiffuse(light, lightToHit, normal);
 
                     Vector3 reflected = reflect(lightToHit, normal);
-                    specular += light->getIntensity()
-                        * pow(max(0.0f, reflected.dot(hit * -1.0f)), 8.0f);
+                    pointing.normalize();
+
+                    specular += light->getIntensity() * pow(max(0.0f, reflected.dot(hit * -1.0f)), 3.7f);
                 }
 
-                Color col = texture->getColor(origin) * diffuse * 0.9f
-                    + specular * 0.1f;
+                Color col = texture->getColor(origin) * diffuse * 0.9f + specular * 0.1f;
                 image.setPixel(x, y, col);
             }
             else // does not intersect

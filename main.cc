@@ -21,21 +21,22 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     auto green = UniformTexture(Color(0, 255, 0));
     auto orange = UniformTexture(Color(255, 153, 0));
 
-    auto sphereRed = Sphere(1.2, Point3(2, -0.4, -3), &red);
-    auto sphereBlue = Sphere(1, Point3(5, 3, 1), &blue);
-    auto sphereGreen = Sphere(1.5, Point3(2, -3, -2), &green);
-    auto plane = Plane(Point3(0, 0, 0), Vector3(0, 0, 0.05), &orange);
+    auto sphereRed = Sphere(3, Point3(10, 3.5, 0), &red);
+    auto sphereBlue = Sphere(1, Point3(7, -3, -2), &blue);
+    auto sphereGreen = Sphere(1.5, Point3(5, -1, 2), &green);
+    auto plane = Plane(Point3(0, -2, 0), Vector3(0, 1, 0), &orange);
     auto objects =
-        vector<SceneObject *>{ &sphereRed, &sphereBlue, &sphereGreen };
+        vector<SceneObject *>{&sphereRed, &sphereBlue, &sphereGreen, &plane};
 
     // Lights
-    auto pointLight = PointLight(Point3(-2, 0, 6), 0.7);
-    auto lights = vector<Light *>{ &pointLight };
+    auto pointLight = PointLight(Point3(2, 7, 3), 0.8);
+    auto pointLight2 = PointLight(Point3(4, 5, -8), 0.5);
+    auto lights = vector<Light *>{&pointLight};
 
     // Camera
-    Point3 cameraPos = Point3(-2, 0, 0);
+    Point3 cameraPos = Point3(0, 0, 0);
     Vector3 cameraDir = Vector3(1, 0, 0);
-    Vector3 cameraUp = Vector3(0, 0, 1);
+    Vector3 cameraUp = Vector3(0, 1, 0);
     auto camera = Camera(cameraPos, cameraDir, cameraUp, width, height, fov);
     cout << camera << endl;
 

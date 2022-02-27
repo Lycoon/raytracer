@@ -18,7 +18,7 @@ float Plane::doesIntersect(Ray ray)
         float dst = dot / denom;
 
         if (dst >= 0.0f)
-            return dst + 2;
+            return dst;
     }
     return -1;
 }
