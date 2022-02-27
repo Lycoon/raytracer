@@ -54,6 +54,18 @@ Ray Scene::castRay(int x, int y)
 }
 */
 
+float computeDiffuse(Light *light, Vector3 lightToHit, Vector3 normal)
+{
+    float angle = max(0.0f, min(normal.dot(lightToHit), 1.0f));
+    return angle * light->getIntensity();
+}
+
+Vector3 reflect(const Vector3 lightDir, Vector3 normal)
+{
+    float dot = 2.0f * lightDir.dot(normal);
+    return lightDir * -1.0f + normal * dot;
+}
+
 Image Scene::draw()
 {
     int w = cam_.getWidth();
@@ -99,18 +111,23 @@ Image Scene::draw()
                 TextureMaterial *texture = closestObject->getTexture(origin);
                 Vector3 normal = closestObject->getNormal(hit);
 
-                float lum = 0;
+                float diffuse = 0;
+                float specular = 0;
                 for (auto light : lights_)
                 {
                     Vector3 lightToHit = light->getPosition() - hit;
                     lightToHit.normalize();
                     normal.normalize();
 
-                    float angle = max(0.0f, min(normal.dot(lightToHit), 1.0f));
-                    lum = angle * light->getIntensity();
+                    diffuse += computeDiffuse(light, lightToHit, normal);
+
+                    Vector3 reflected = reflect(lightToHit, normal);
+                    specular += light->getIntensity()
+                        * pow(max(0.0f, reflected.dot(hit * -1.0f)), 8.0f);
                 }
 
-                Color col = texture->getColor(origin) * lum;
+                Color col = texture->getColor(origin) * diffuse * 0.9f
+                    + specular * 0.1f;
                 image.setPixel(x, y, col);
             }
             else // does not intersect

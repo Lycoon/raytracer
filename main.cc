@@ -21,7 +21,7 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     auto green = UniformTexture(Color(0, 255, 0));
     auto orange = UniformTexture(Color(255, 153, 0));
 
-    auto sphereRed = Sphere(1, Point3(2, 0, 0), &red);
+    auto sphereRed = Sphere(1.2, Point3(2, -0.4, -3), &red);
     auto sphereBlue = Sphere(1, Point3(5, 3, 1), &blue);
     auto sphereGreen = Sphere(1.5, Point3(2, -3, -2), &green);
     auto plane = Plane(Point3(0, 0, 0), Vector3(0, 0, 0.05), &orange);
