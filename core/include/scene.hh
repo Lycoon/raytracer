@@ -19,8 +19,8 @@ public:
     const vector<SceneObject *> getObjects() const;
     const vector<Light *> getLights() const;
     const Camera getCamera() const;
+    Ray castRay(int x, int y);
     Image draw();
-    void castRay();
 
     void addObject(SceneObject *object);
     void addLight(Light *light);

@@ -10,6 +10,9 @@ public:
         , intensity_(intensity)
     {}
 
+    const Point3 getPosition() const;
+    float getIntensity() const;
+
 protected:
     Point3 pos_;
     float intensity_;
