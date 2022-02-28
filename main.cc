@@ -16,12 +16,12 @@ using namespace std;
 void loadErwanScene(int width, int height, int fov, string outputName)
 {
     // Objects
-    auto matObj = Components(1.0f, 0.08f, 1.0f);
-    auto matPlane = Components(1.0f, 0.1f, 1.0f);
+    auto matObj = Components(0.9f, 0.1f, 1.0f);
+    auto matPlane = Components(0.5f, 0.5f, 1.0f);
 
     auto obj1_color = UniformTexture(Color(66, 135, 245), matObj);
     auto obj2_color = UniformTexture(Color(227, 66, 245), matObj);
-    auto pla1_color = UniformTexture(Color(212, 104, 104), matPlane);
+    auto pla1_color = UniformTexture(Color(75, 200, 120), matPlane);
 
     auto obj1 = Sphere(1, Point3(10, 5, 0), &obj1_color);
     auto obj2 = Sphere(2, Point3(10, 0, 0), &obj2_color);
@@ -29,7 +29,7 @@ void loadErwanScene(int width, int height, int fov, string outputName)
     auto objects = vector<SceneObject *>{ &plane1, &obj1, &obj2 };
 
     // Lights
-    auto pointLight = PointLight(Point3(-10, 5, 3), 1);
+    auto pointLight = PointLight(Point3(0, 5, 3), 0.9f);
     auto lights = vector<Light *>{ &pointLight };
 
     // Camera

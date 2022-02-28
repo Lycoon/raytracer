@@ -129,7 +129,7 @@ Image Scene::draw()
                     hitToLight.normalize();
 
                     diffuse += clamp(computeDiffuse(light, hitToLight, normal), 0.0f, 1.0f);
-                    specular += clamp(computeSpecular(light, hitToLight, hitToCamera, normal), 0.0f, 1.0f);
+                    specular += max(0.0f, computeSpecular(light, hitToLight, hitToCamera, normal));
                 }
 
                 Components c = texture->getComponents(origin);
