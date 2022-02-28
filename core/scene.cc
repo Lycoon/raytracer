@@ -115,16 +115,14 @@ Image Scene::draw()
                 float specular = 0;
                 for (auto light : lights_)
                 {
-                    Vector3 hitToLight = hit - light->getPosition();
-                    hitToLight.normalize();
-
-                    diffuse += computeDiffuse(light, hitToLight, normal);
-
-                    Vector3 reflected = reflect(hitToLight * -1.0f, normal);
+                    Vector3 fromLight = hit - light->getPosition();
                     Vector3 hitToCamera = cam_.getCenter() - hit;
-                    pointing.normalize();
+                    fromLight.normalize();
                     hitToCamera.normalize();
 
+                    diffuse += computeDiffuse(light, fromLight, normal);
+
+                    Vector3 reflected = reflect(fromLight, normal);
                     specular += light->getIntensity() * pow(reflected.dot(hitToCamera), 10.0f);
                 }
 
