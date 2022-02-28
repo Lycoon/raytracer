@@ -22,14 +22,14 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     auto orange = UniformTexture(Color(255, 153, 0));
 
     auto sphereRed = Sphere(3, Point3(10, 3.5, 0), &red);
-    auto sphereBlue = Sphere(1, Point3(7, -3, -2), &blue);
-    auto sphereGreen = Sphere(1.5, Point3(5, -1, 2), &green);
+    auto sphereBlue = Sphere(2.5, Point3(10, -4, -3), &blue);
+    auto sphereGreen = Sphere(1.5, Point3(6, -1, 2), &green);
     auto plane = Plane(Point3(0, -2, 0), Vector3(0, 1, 0), &orange);
     auto objects =
         vector<SceneObject *>{&sphereRed, &sphereBlue, &sphereGreen, &plane};
 
     // Lights
-    auto pointLight = PointLight(Point3(2, 7, 3), 0.8);
+    auto pointLight = PointLight(Point3(0, 7, 4), 0.8);
     auto pointLight2 = PointLight(Point3(4, 5, -8), 0.5);
     auto lights = vector<Light *>{&pointLight};
 

@@ -54,16 +54,16 @@ Ray Scene::castRay(int x, int y)
 }
 */
 
-float computeDiffuse(Light *light, Vector3 lightToHit, Vector3 normal)
+float computeDiffuse(Light *light, Vector3 hitToLight, Vector3 normal)
 {
-    float angle = max(0.0f, min(normal.dot(lightToHit), 1.0f));
+    float angle = max(0.0f, min(normal.dot(hitToLight * -1.0f), 1.0f));
     return angle * light->getIntensity();
 }
 
 Vector3 reflect(const Vector3 lightDir, Vector3 normal)
 {
     float dot = 2.0f * lightDir.dot(normal);
-    return lightDir * -1.0f + normal * dot;
+    return lightDir + normal * dot;
 }
 
 Image Scene::draw()
@@ -109,21 +109,23 @@ Image Scene::draw()
             {
                 TextureMaterial *texture = closestObject->getTexture(origin);
                 Vector3 normal = closestObject->getNormal(hit);
+                normal.normalize();
 
                 float diffuse = 0;
                 float specular = 0;
                 for (auto light : lights_)
                 {
-                    Vector3 lightToHit = light->getPosition() - hit;
-                    lightToHit.normalize();
-                    normal.normalize();
+                    Vector3 hitToLight = hit - light->getPosition();
+                    hitToLight.normalize();
 
-                    diffuse += computeDiffuse(light, lightToHit, normal);
+                    diffuse += computeDiffuse(light, hitToLight, normal);
 
-                    Vector3 reflected = reflect(lightToHit, normal);
+                    Vector3 reflected = reflect(hitToLight * -1.0f, normal);
+                    Vector3 hitToCamera = cam_.getCenter() - hit;
                     pointing.normalize();
+                    hitToCamera.normalize();
 
-                    specular += light->getIntensity() * pow(max(0.0f, reflected.dot(hit * -1.0f)), 3.7f);
+                    specular += light->getIntensity() * pow(reflected.dot(hitToCamera), 10.0f);
                 }
 
                 Color col = texture->getColor(origin) * diffuse * 0.9f + specular * 0.1f;

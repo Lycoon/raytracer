@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
 
 #include "camera.hh"
 #include "image.hh"
@@ -11,10 +12,9 @@ class Scene
 {
 public:
     Scene(vector<SceneObject *> objects, vector<Light *> lights, Camera camera)
-        : objs_(objects)
-        , lights_(lights)
-        , cam_(camera)
-    {}
+        : objs_(objects), lights_(lights), cam_(camera)
+    {
+    }
 
     const vector<SceneObject *> getObjects() const;
     const vector<Light *> getLights() const;
