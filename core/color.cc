@@ -38,6 +38,27 @@ Color Color::operator/(const float &l) const
     return Color(r_ / l, g_ / l, b_ / l);
 }
 
+// Color operations
+Color Color::operator+(const Color &c) const
+{
+    return Color(r_ + c.r_, g_ + c.g_, b_ + c.b_);
+}
+
+Color Color::operator-(const Color &c) const
+{
+    return Color(r_ - c.r_, g_ - c.g_, b_ - c.b_);
+}
+
+Color Color::operator*(const Color &c) const
+{
+    return Color(r_ * c.r_, g_ * c.g_, b_ * c.b_);
+}
+
+Color Color::operator/(const Color &c) const
+{
+    return Color(r_ / c.r_, g_ / c.g_, b_ / c.b_);
+}
+
 // Print
 ostream &operator<<(ostream &out, Color &color)
 {

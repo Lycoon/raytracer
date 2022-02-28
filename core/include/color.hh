@@ -27,6 +27,11 @@ public:
     Color operator*(const float &l) const;
     Color operator/(const float &l) const;
 
+    Color operator+(const Color &c) const;
+    Color operator-(const Color &c) const;
+    Color operator*(const Color &c) const;
+    Color operator/(const Color &c) const;
+
 private:
     int r_, g_, b_;
 };
