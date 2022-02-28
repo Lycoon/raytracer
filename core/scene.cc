@@ -62,7 +62,7 @@ Vector3 reflect(const Vector3 lightDir, Vector3 normal)
 
 float computeDiffuse(Light *light, Vector3 hitToLight, Vector3 normal)
 {
-    float angle = max(0.0f, min(normal.dot(hitToLight), 1.0f));
+    float angle = clamp(normal.dot(hitToLight), 0.0f, 1.0f);
     return angle * light->getIntensity();
 }
 
@@ -128,13 +128,13 @@ Image Scene::draw()
                     Vector3 hitToLight = light->getPosition() - hit;
                     hitToLight.normalize();
 
-                    diffuse += computeDiffuse(light, hitToLight * -1.0f, normal);
-                    specular += computeSpecular(light, hitToLight, hitToCamera, normal);
+                    diffuse += clamp(computeDiffuse(light, hitToLight, normal), 0.0f, 1.0f);
+                    specular += clamp(computeSpecular(light, hitToLight, hitToCamera, normal), 0.0f, 1.0f);
                 }
 
                 Components c = texture->getComponents(origin);
                 Color color = texture->getColor(origin);
-                Color pixel = color * diffuse * c.getKd() * c.getKa() + specular * c.getKs();
+                Color pixel = color * diffuse * c.getKd() * c.getKa() + specular * 0;
 
                 image.setPixel(x, y, pixel);
             }

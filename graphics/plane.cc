@@ -7,7 +7,7 @@ const Point3 &Plane::getPosition() const
 
 float Plane::doesIntersect(Ray ray)
 {
-    float denom = normal_.dot(ray.getDirection());
+    float denom = ray.getDirection().dot(normal_);
     if (denom > 1e-6)
     {
         Vector3 p0l0 = position_ - ray.getOrigin();

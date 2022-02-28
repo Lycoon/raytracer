@@ -25,7 +25,7 @@ void loadErwanScene(int width, int height, int fov, string outputName)
 
     auto obj1 = Sphere(1, Point3(10, 5, 0), &obj1_color);
     auto obj2 = Sphere(2, Point3(10, 0, 0), &obj2_color);
-    auto plane1 = Plane(Point3(0, -2, 0), Vector3(0, -1, 0), &pla1_color);
+    auto plane1 = Plane(Point3(0, -2, 0), Vector3(0, 1, 0), &pla1_color);
     auto objects = vector<SceneObject *>{ &plane1, &obj1, &obj2 };
 
     // Lights
