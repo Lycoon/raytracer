@@ -123,17 +123,33 @@ Image Scene::draw()
 
                 float diffuse = 0;
                 float specular = 0;
+                bool shadowed = false;
                 for (auto light : lights_)
                 {
                     Vector3 hitToLight = light->getPosition() - hit;
                     hitToLight.normalize();
 
-                    diffuse += clamp(computeDiffuse(light, hitToLight, normal), 0.0f, 1.0f);
-                    specular += max(0.0f, computeSpecular(light, hitToLight, hitToCamera, normal));
+                    Ray lightRay(hit, hitToLight);
+                    for (auto obj : objs_)
+                    {
+                        if (obj == closestObject)
+                            continue; 
+
+                        float dst = obj->doesIntersect(lightRay);
+                        if (dst < 0.0f)
+                            continue;
+
+                        shadowed = true;
+                    }
+
+                    if (!shadowed) {
+                        diffuse += clamp(computeDiffuse(light, hitToLight, normal), 0.0f, 1.0f);
+                        specular += max(0.0f, computeSpecular(light, hitToLight, hitToCamera, normal));
+                    }
                 }
 
                 Components c = texture->getComponents(origin);
-                Color color = texture->getColor(origin);
+                Color color = shadowed ? Color(0, 0, 0) : texture->getColor(origin);
                 Color pixel = color * diffuse * c.getKd() + specular * c.getKs();
                 pixel = pixel + color * c.getKa();
 
