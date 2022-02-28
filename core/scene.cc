@@ -54,16 +54,23 @@ Ray Scene::castRay(int x, int y)
 }
 */
 
-float computeDiffuse(Light *light, Vector3 hitToLight, Vector3 normal)
-{
-    float angle = max(0.0f, min(normal.dot(hitToLight * -1.0f), 1.0f));
-    return angle * light->getIntensity();
-}
-
 Vector3 reflect(const Vector3 lightDir, Vector3 normal)
 {
     float dot = 2.0f * lightDir.dot(normal);
     return lightDir + normal * dot;
+}
+
+float computeDiffuse(Light *light, Vector3 hitToLight, Vector3 normal)
+{
+    float angle = max(0.0f, min(normal.dot(hitToLight), 1.0f));
+    return angle * light->getIntensity();
+}
+
+float computeSpecular(Light *light, Vector3 hitToLight, Vector3 hitToCamera,
+                      Vector3 normal)
+{
+    Vector3 reflected = reflect(hitToLight, normal);
+    return light->getIntensity() * pow(reflected.dot(hitToCamera), 7.0f);
 }
 
 Image Scene::draw()
@@ -101,7 +108,8 @@ Image Scene::draw()
                 {
                     minDst = dst;
                     closestObject = obj;
-                    hit = ray.getOrigin() + ray.getDirection().getPosition() * dst;
+                    hit = ray.getOrigin()
+                        + ray.getDirection().getPosition() * dst;
                 }
             }
 
@@ -109,25 +117,26 @@ Image Scene::draw()
             {
                 TextureMaterial *texture = closestObject->getTexture(origin);
                 Vector3 normal = closestObject->getNormal(hit);
+                Vector3 hitToCamera = cam_.getCenter() - hit;
+                hitToCamera.normalize();
                 normal.normalize();
 
                 float diffuse = 0;
                 float specular = 0;
                 for (auto light : lights_)
                 {
-                    Vector3 fromLight = hit - light->getPosition();
-                    Vector3 hitToCamera = cam_.getCenter() - hit;
-                    fromLight.normalize();
-                    hitToCamera.normalize();
+                    Vector3 hitToLight = light->getPosition() - hit;
+                    hitToLight.normalize();
 
-                    diffuse += computeDiffuse(light, fromLight, normal);
-
-                    Vector3 reflected = reflect(fromLight, normal);
-                    specular += light->getIntensity() * pow(reflected.dot(hitToCamera), 10.0f);
+                    diffuse += computeDiffuse(light, hitToLight * -1.0f, normal);
+                    specular += computeSpecular(light, hitToLight, hitToCamera, normal);
                 }
 
-                Color col = texture->getColor(origin) * diffuse * 0.9f + specular * 0.1f;
-                image.setPixel(x, y, col);
+                Components c = texture->getComponents(origin);
+                Color color = texture->getColor(origin);
+                Color pixel = color * diffuse * c.getKd() * c.getKa() + specular * c.getKs();
+
+                image.setPixel(x, y, pixel);
             }
             else // does not intersect
             {

@@ -13,25 +13,61 @@ using namespace std;
 #define DEFAULT_FOV 90
 #define DEFAULT_OUTPUT_NAME "output"
 
+void loadErwanScene(int width, int height, int fov, string outputName)
+{
+    // Objects
+    auto matObj = Components(1.0f, 0.08f, 1.0f);
+    auto matPlane = Components(1.0f, 0.1f, 1.0f);
+
+    auto obj1_color = UniformTexture(Color(66, 135, 245), matObj);
+    auto obj2_color = UniformTexture(Color(227, 66, 245), matObj);
+    auto pla1_color = UniformTexture(Color(212, 104, 104), matPlane);
+
+    auto obj1 = Sphere(1, Point3(10, 5, 0), &obj1_color);
+    auto obj2 = Sphere(2, Point3(10, 0, 0), &obj2_color);
+    auto plane1 = Plane(Point3(0, -2, 0), Vector3(0, -1, 0), &pla1_color);
+    auto objects = vector<SceneObject *>{ &plane1, &obj1, &obj2 };
+
+    // Lights
+    auto pointLight = PointLight(Point3(-10, 5, 3), 1);
+    auto lights = vector<Light *>{ &pointLight };
+
+    // Camera
+    Point3 cameraPos = Point3(-5, 0, 0);
+    Vector3 cameraDir = Vector3(1, 0, 0);
+    Vector3 cameraUp = Vector3(0, 1, 0);
+    auto camera = Camera(cameraPos, cameraDir, cameraUp, width, height, fov);
+    cout << camera << endl;
+
+    // Creating scene
+    Scene scene(objects, lights, camera);
+
+    Image image = scene.draw();
+    image.save(outputName);
+}
+
 void loadDefaultScene(int width, int height, int fov, string outputName)
 {
     // Objects
-    auto red = UniformTexture(Color(255, 0, 0));
-    auto blue = UniformTexture(Color(0, 0, 255));
-    auto green = UniformTexture(Color(0, 255, 0));
-    auto orange = UniformTexture(Color(255, 153, 0));
+    auto matObj = Components(1.0f, 0.3f, 1.0f);
+    auto matPlane = Components(1.0f, 0.1f, 0);
+
+    auto red = UniformTexture(Color(255, 0, 0), matObj);
+    auto blue = UniformTexture(Color(0, 0, 255), matObj);
+    auto green = UniformTexture(Color(0, 255, 0), matObj);
+    auto orange = UniformTexture(Color(255, 153, 0), matPlane);
 
     auto sphereRed = Sphere(3, Point3(10, 3.5, 0), &red);
     auto sphereBlue = Sphere(2.5, Point3(10, -4, -3), &blue);
     auto sphereGreen = Sphere(1.5, Point3(6, -1, 2), &green);
-    auto plane = Plane(Point3(0, -2, 0), Vector3(0, 1, 0), &orange);
+    auto plane = Plane(Point3(0, -3, 0), Vector3(0, 1, 0), &orange);
     auto objects =
-        vector<SceneObject *>{&sphereRed, &sphereBlue, &sphereGreen, &plane};
+        vector<SceneObject *>{ &sphereRed, &sphereBlue, &sphereGreen, &plane };
 
     // Lights
     auto pointLight = PointLight(Point3(0, 7, 4), 0.8);
     auto pointLight2 = PointLight(Point3(4, 5, -8), 0.5);
-    auto lights = vector<Light *>{&pointLight};
+    auto lights = vector<Light *>{ &pointLight };
 
     // Camera
     Point3 cameraPos = Point3(0, 0, 0);
@@ -58,7 +94,8 @@ int main(int argc, char const *argv[])
     int fov = argc >= 4 ? atoi(argv[3]) : DEFAULT_FOV;
     string outputName = argc >= 5 ? argv[4] : DEFAULT_OUTPUT_NAME;
 
-    loadDefaultScene(width, height, fov, outputName);
+    // loadDefaultScene(width, height, fov, outputName);
+    loadErwanScene(width, height, fov, outputName);
 
     return 0;
 }

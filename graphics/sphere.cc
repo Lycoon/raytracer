@@ -30,7 +30,7 @@ float Sphere::doesIntersect(Ray ray)
 
     float delta = b * b - 4 * a * c;
     if (delta < 0.0)
-        return -1.0;
+        return -1;
     else
     {
         float numerator = -b - sqrt(delta);
@@ -40,14 +40,14 @@ float Sphere::doesIntersect(Ray ray)
         numerator = -b + sqrt(delta);
         if (numerator > 0.0)
             return numerator / (2.0 * a);
-        else
-            return -1;
+            
+        return -1;
     }
 }
 
 Vector3 Sphere::getNormal(Point3 p)
 {
-    return p - center_;
+    return center_ - p;
 }
 
 TextureMaterial *Sphere::getTexture(Point3 p)

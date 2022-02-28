@@ -7,19 +7,18 @@ const Point3 &Plane::getPosition() const
 
 float Plane::doesIntersect(Ray ray)
 {
-    Vector3 dir = ray.getDirection();
-    Vector3 normal = normal_;
-
-    float denom = normal.dot(dir);
-    if (denom > 0.000001f)
+    float denom = normal_.dot(ray.getDirection());
+    if (denom > 1e-6)
     {
-        Vector3 v = position_ - ray.getOrigin();
-        float dot = v.dot(normal);
-        float dst = dot / denom;
+        Vector3 p0l0 = position_ - ray.getOrigin();
+        float t = p0l0.dot(normal_) / denom;
 
-        if (dst >= 0.0f)
-            return dst;
+        if (t >= 0)
+            return t;
+
+        return -1;
     }
+
     return -1;
 }
 

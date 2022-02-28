@@ -6,10 +6,9 @@
 class UniformTexture : public TextureMaterial
 {
 public:
-    UniformTexture(Color color)
-        : TextureMaterial(color)
+    UniformTexture(Color color, Components components)
+        : TextureMaterial(color, components)
     {}
 
-    vector<float> getComponents(Point3 p) const;
     Color getColor(Point3 p) const;
 };
