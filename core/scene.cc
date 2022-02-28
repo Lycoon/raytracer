@@ -134,7 +134,7 @@ Image Scene::draw()
 
                 Components c = texture->getComponents(origin);
                 Color color = texture->getColor(origin);
-                Color pixel = color * diffuse * c.getKd() * c.getKa() + specular * 0;
+                Color pixel = color * diffuse * c.getKd() * c.getKa() + specular * c.getKs();
 
                 image.setPixel(x, y, pixel);
             }

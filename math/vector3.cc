@@ -102,6 +102,11 @@ Vector3 Vector3::operator/(const Vector3 &v) const
     return Vector3(pos_ / v.getPosition());
 }
 
+bool Vector3::operator==(const Vector3 &v) const
+{
+    return pos_.getX() == v.pos_.getX() && pos_.getY() == v.pos_.getY() && pos_.getZ() == v.pos_.getZ();
+}
+
 ostream &operator<<(ostream &out, Vector3 &vect3)
 {
     Point3 pos = vect3.getPosition();
