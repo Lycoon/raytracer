@@ -70,10 +70,7 @@ float computeSpecular(Light *light, Vector3 hitToLight, Vector3 hitToCamera,
     Vector3 reflected = reflect(hitToCamera * -1.0f, normal);
     float dot = reflected.dot(hitToLight * -1.0f);
 
-    if (dot >= 1.0f)
-        cout << "dot: " << dot << endl;
-
-    return pow(dot, 5.0f);
+    return pow(dot, 40.0f) * 255;
 }
 
 Image Scene::draw()
