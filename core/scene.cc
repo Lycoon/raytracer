@@ -109,8 +109,7 @@ Image Scene::draw()
                 {
                     minDst = dst;
                     closestObject = obj;
-                    hit = ray.getOrigin()
-                        + ray.getDirection().getPosition() * dst;
+                    hit = ray.getOrigin() + ray.getDirection().getPosition() * dst;
                 }
             }
 
@@ -127,8 +126,9 @@ Image Scene::draw()
                 for (auto light : lights_)
                 {
                     Vector3 hitToLight = light->getPosition() - hit;
-                    hitToLight.normalize();
+                    float lightDistance = hitToLight.magnitude();
 
+                    hitToLight.normalize();
                     Ray lightRay(hit, hitToLight);
                     for (auto obj : objs_)
                     {
@@ -142,14 +142,17 @@ Image Scene::draw()
                         shadowed = true;
                     }
 
-                    if (!shadowed) {
-                        diffuse += clamp(computeDiffuse(light, hitToLight, normal), 0.0f, 1.0f) * light->getIntensity();
-                        specular += max(0.0f, computeSpecular(light, hitToLight, hitToCamera, normal)) * light->getIntensity();
+                    if (!shadowed)
+                    {
+                        float lightForce = light->getIntensity() * (1.0f / pow(lightDistance, 2));
+                        diffuse += clamp(computeDiffuse(light, hitToLight, normal), 0.0f, 1.0f) * lightForce;
+                        specular += max(0.0f, computeSpecular(light, hitToLight, hitToCamera, normal)) * lightForce;
                     }
                 }
 
                 Components c = texture->getComponents(origin);
                 Color color = texture->getColor(origin);
+
                 Color pixel = color * diffuse * c.getKd() + specular * c.getKs();
                 pixel = pixel + color * c.getKa();
 

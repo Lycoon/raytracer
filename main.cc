@@ -26,15 +26,15 @@ void loadErwanScene(int width, int height, int fov, string outputName)
     auto pla1_color = UniformTexture(Color(200, 150, 120), matPlane);
 
     auto obj1 = Sphere(0.5, Point3(-1, -1.5, 2.5), &obj1_color);
-    auto obj2 = Sphere(2.5, Point3(9, 6, 0), &obj2_color);
+    auto obj2 = Sphere(2.5, Point3(7, 2, 1), &obj2_color);
     auto obj3 = Sphere(1, Point3(1, -1, -2.5), &obj3_color);
     auto obj4 = Sphere(0.5, Point3(-2, -1.5, 0.5), &obj4_color);
     auto plane1 = Plane(Point3(0, -2, 0), Vector3(0, 1, 0), &pla1_color);
-    auto objects = vector<SceneObject *>{ &plane1, &obj1, &obj2, &obj3, &obj4 };
+    auto objects = vector<SceneObject *>{&plane1, &obj1, &obj2, &obj3, &obj4};
 
     // Lights
-    auto pointLight = PointLight(Point3(0, 6, 3), 0.9f);
-    auto lights = vector<Light *>{ &pointLight };
+    auto pointLight = PointLight(Point3(0, 6, 3), 50.0f);
+    auto lights = vector<Light *>{&pointLight};
 
     // Camera
     Point3 cameraPos = Point3(-5, 0, 0);
@@ -66,12 +66,12 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     auto sphereGreen = Sphere(1.5, Point3(6, -1, 2), &green);
     auto plane = Plane(Point3(0, -3, 0), Vector3(0, 1, 0), &orange);
     auto objects =
-        vector<SceneObject *>{ &sphereRed, &sphereBlue, &sphereGreen, &plane };
+        vector<SceneObject *>{&sphereRed, &sphereBlue, &sphereGreen, &plane};
 
     // Lights
     auto pointLight = PointLight(Point3(0, 7, 4), 0.8);
     auto pointLight2 = PointLight(Point3(4, 5, -8), 0.5);
-    auto lights = vector<Light *>{ &pointLight };
+    auto lights = vector<Light *>{&pointLight};
 
     // Camera
     Point3 cameraPos = Point3(0, 0, 0);
