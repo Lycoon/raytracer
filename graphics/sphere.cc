@@ -47,7 +47,10 @@ float Sphere::doesIntersect(Ray ray)
 
 Vector3 Sphere::getNormal(Point3 p)
 {
-    return p - center_;
+    Vector3 normal = p - center_;
+    normal.normalize();
+
+    return normal;
 }
 
 TextureMaterial *Sphere::getTexture(Point3 p)

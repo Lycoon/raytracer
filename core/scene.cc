@@ -54,23 +54,26 @@ Ray Scene::castRay(int x, int y)
 }
 */
 
-Vector3 reflect(const Vector3 lightDir, Vector3 normal)
+Vector3 reflect(Vector3 camToHit, Vector3 normal)
 {
-    float dot = 2.0f * lightDir.dot(normal);
-    return lightDir + normal * dot;
+    return camToHit - normal * (camToHit.dot(normal)) * 2.0f;
 }
 
 float computeDiffuse(Light *light, Vector3 hitToLight, Vector3 normal)
 {
-    float angle = clamp(normal.dot(hitToLight), 0.0f, 1.0f);
-    return angle * light->getIntensity();
+    return clamp(normal.dot(hitToLight), 0.0f, 1.0f);
 }
 
 float computeSpecular(Light *light, Vector3 hitToLight, Vector3 hitToCamera,
                       Vector3 normal)
 {
-    Vector3 reflected = reflect(hitToLight, normal);
-    return light->getIntensity() * pow(reflected.dot(hitToCamera), 7.0f);
+    Vector3 reflected = reflect(hitToCamera * -1.0f, normal);
+    float dot = reflected.dot(hitToLight * -1.0f);
+
+    if (dot >= 1.0f)
+        cout << "dot: " << dot << endl;
+
+    return pow(dot, 5.0f);
 }
 
 Image Scene::draw()
@@ -93,6 +96,7 @@ Image Scene::draw()
         for (float x = 0.0; x < w; x++)
         {
             Vector3 pointing = tmp.rotate(cam_.getUp(), (x - w / 2) * padX);
+            pointing.normalize();
 
             float minDst = INFINITY;
             SceneObject *closestObject = nullptr;
@@ -119,7 +123,6 @@ Image Scene::draw()
                 Vector3 normal = closestObject->getNormal(hit);
                 Vector3 hitToCamera = cam_.getCenter() - hit;
                 hitToCamera.normalize();
-                normal.normalize();
 
                 float diffuse = 0;
                 float specular = 0;
@@ -133,7 +136,7 @@ Image Scene::draw()
                     for (auto obj : objs_)
                     {
                         if (obj == closestObject)
-                            continue; 
+                            continue;
 
                         float dst = obj->doesIntersect(lightRay);
                         if (dst < 0.0f)
@@ -143,13 +146,13 @@ Image Scene::draw()
                     }
 
                     if (!shadowed) {
-                        diffuse += clamp(computeDiffuse(light, hitToLight, normal), 0.0f, 1.0f);
-                        specular += max(0.0f, computeSpecular(light, hitToLight, hitToCamera, normal));
+                        diffuse += clamp(computeDiffuse(light, hitToLight, normal), 0.0f, 1.0f) * light->getIntensity();
+                        specular += max(0.0f, computeSpecular(light, hitToLight, hitToCamera, normal)) * light->getIntensity();
                     }
                 }
 
                 Components c = texture->getComponents(origin);
-                Color color = shadowed ? Color(0, 0, 0) : texture->getColor(origin);
+                Color color = texture->getColor(origin);
                 Color pixel = color * diffuse * c.getKd() + specular * c.getKs();
                 pixel = pixel + color * c.getKa();
 
