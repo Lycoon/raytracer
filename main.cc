@@ -46,7 +46,7 @@ void loadErwanScene(int width, int height, int fov, string outputName)
     // Creating scene
     Scene scene(objects, lights, camera);
 
-    Image image = scene.draw();
+    Image image = scene.render();
     image.save(outputName);
 }
 
@@ -83,7 +83,7 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     // Creating scene
     Scene scene(objects, lights, camera);
 
-    Image image = scene.draw();
+    Image image = scene.render();
     image.save(outputName);
 }
 

@@ -16,6 +16,9 @@ public:
     {
     }
 
+    const Color BLACK = Color(0, 0, 0);
+    const Point3 ORIGIN = Point3(0, 0, 0);
+
     struct CastRayResult {
         SceneObject *object;
         Point3 hit;
@@ -24,14 +27,13 @@ public:
     const vector<SceneObject *> getObjects() const;
     const vector<Light *> getLights() const;
     const Camera getCamera() const;
-    CastRayResult* castRay(Vector3 ray);
-    Color castRayLight(SceneObject *object, Point3 hit, Point3 origin);
-    Image draw();
+    CastRayResult* castRay(Ray ray);
+    Color castRayLight(SceneObject *object, Point3 hit, int rec_);
+    Image render();
 
     void addObject(SceneObject *object);
     void addLight(Light *light);
     void setCamera(Camera camera);
-
 
 private:
     vector<SceneObject *> objs_;
