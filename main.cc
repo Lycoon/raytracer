@@ -16,8 +16,8 @@ using namespace std;
 void loadErwanScene(int width, int height, int fov, string outputName)
 {
     // Objects
-    auto matObj = Components(0.8f, 0.2f, 0.2f);
-    auto matPlane = Components(0.85f, 0.1f, 0.05f);
+    auto matObj = Components(0.8f, 0.4f, 0.2f);
+    auto matPlane = Components(0.85f, 0.3f, 0.05f);
 
     auto obj1_color = UniformTexture(Color(66, 135, 245), matObj);
     auto obj2_color = UniformTexture(Color(120, 180, 60), matObj);

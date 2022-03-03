@@ -47,7 +47,7 @@ float getDiffuse(Light *light, Vector3 hitToLight, Vector3 normal)
 
 float getSpecular(Light *light, Vector3 hitToLight, Vector3 reflected)
 {
-    float dot = reflected.dot(hitToLight * -1.0f);
+    float dot = reflected.dot(hitToLight);
     return pow(dot, 40.0f) * 255;
 }
 
@@ -116,7 +116,7 @@ Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_ = 0)
         return pixel;
 
     Color reboundColor = castRayLight(rebound->object, rebound->hit, rec_ + 1);
-    pixel = pixel + reboundColor * reflectLoss;
+    pixel = pixel + reboundColor * reflectLoss * c.getKs();
 
     return pixel;
 }
