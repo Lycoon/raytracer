@@ -87,8 +87,6 @@ Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_ = 0)
 
     Vector3 reflected = reflect(hitToCamera * -1.0f, normal);
 
-    float i_d = 0;
-    float i_s = 0;
     float reflectLoss = 1.0f / (rec_ + 1);
     bool shadowed = false;
     for (auto light : lights_)
@@ -105,22 +103,22 @@ Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_ = 0)
         float shadowRatio = shadowed ? 0.4f : 1.0f;
         float luminance = light->getIntensity() * (1.0f / pow(lightDistance, 2)) * shadowRatio;
         
-        i_d = c.getKd() * getDiffuse(light, hitToLight, normal) * luminance;
-        i_s = c.getKs() * getSpecular(light, hitToLight, reflected) * luminance;
+        Color i_d = color * c.getKd() * getDiffuse(light, hitToLight, normal) * luminance;
+        float i_s = c.getKs() * getSpecular(light, hitToLight, reflected) * luminance;
 
-        float i_sum = i_d + i_s;
+        Color i_sColor(i_s, i_s, i_s);
+        Color i_sum = i_d + i_sColor;
         pixel = pixel + i_sum;
     }
 
-    Ray reflect = Ray(hit, reflected);
-    CastRayResult* rebound = castRay(reflect);
+    CastRayResult* rebound = castRay(Ray(hit, reflected));
     if (rebound->object == nullptr)
-        return pixel + color * c.getKa();
+        return pixel;
 
     Color reboundColor = castRayLight(rebound->object, rebound->hit, rec_ + 1);
     pixel = pixel + reboundColor * reflectLoss;
 
-    return pixel + color * c.getKa();
+    return pixel;
 }
 
 Image Scene::render()
