@@ -113,12 +113,12 @@ Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_ = 0)
 
     CastRayResult* rebound = castRay(Ray(hit, reflected));
     if (rebound->object == nullptr)
-        return pixel;
+        return pixel + pixel * c.getKa();
 
     Color reboundColor = castRayLight(rebound->object, rebound->hit, rec_ + 1);
     pixel = pixel + reboundColor * reflectLoss * c.getKs();
 
-    return pixel;
+    return pixel + pixel * c.getKa();
 }
 
 Image Scene::render()
