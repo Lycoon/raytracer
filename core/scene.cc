@@ -71,21 +71,25 @@ Scene::CastRayResult* Scene::castRay(Ray ray)
     return res;
 }
 
-Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_)
+Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_ = 0)
 {
-    if (rec_ <= 0) // stopping reflection
+    if (rec_ >= MAX_RECURSION_DEPTH) // stopping reflection
         return BLACK;
 
     TextureMaterial *texture = object->getTexture(ORIGIN);
     Components c = texture->getComponents(ORIGIN);
     Color color = texture->getColor(ORIGIN);
+    Color pixel = BLACK;
     
     Vector3 normal = object->getNormal(hit);
     Vector3 hitToCamera = cam_.getCenter() - hit;
     hitToCamera.normalize();
 
-    float diffuse = 0;
-    float specular = 0;
+    Vector3 reflected = reflect(hitToCamera * -1.0f, normal);
+
+    float i_d = 0;
+    float i_s = 0;
+    float reflectLoss = 1.0f / (rec_ + 1);
     bool shadowed = false;
     for (auto light : lights_)
     {
@@ -101,14 +105,21 @@ Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_)
         float shadowRatio = shadowed ? 0.4f : 1.0f;
         float luminance = light->getIntensity() * (1.0f / pow(lightDistance, 2)) * shadowRatio;
         
-        Vector3 reflected = reflect(hitToCamera * -1.0f, normal);
-        diffuse += getDiffuse(light, hitToLight, normal) * luminance;
-        specular += getSpecular(light, hitToLight, reflected) * luminance;
+        i_d = c.getKd() * getDiffuse(light, hitToLight, normal) * luminance;
+        i_s = c.getKs() * getSpecular(light, hitToLight, reflected) * luminance;
+
+        float i_sum = i_d + i_s;
+        pixel = pixel + i_sum;
     }
 
-    Color recColor = castRayLight(object, hit, rec_ - 1);
+    Ray reflect = Ray(hit, reflected);
+    CastRayResult* rebound = castRay(reflect);
+    if (rebound->object == nullptr)
+        return pixel + color * c.getKa();
 
-    Color pixel = color * diffuse * c.getKd() + specular * c.getKs();
+    Color reboundColor = castRayLight(rebound->object, rebound->hit, rec_ + 1);
+    pixel = pixel + reboundColor * reflectLoss;
+
     return pixel + color * c.getKa();
 }
 
@@ -139,7 +150,7 @@ Image Scene::render()
 
             if (object != nullptr) // intersects
             {
-                Color pixel = castRayLight(object, hit, 5);
+                Color pixel = castRayLight(object, hit);
                 image.setPixel(x, y, pixel);
             }
             else // does not intersect

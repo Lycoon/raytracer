@@ -18,6 +18,7 @@ public:
 
     const Color BLACK = Color(0, 0, 0);
     const Point3 ORIGIN = Point3(0, 0, 0);
+    const int MAX_RECURSION_DEPTH = 5;
 
     struct CastRayResult {
         SceneObject *object;
