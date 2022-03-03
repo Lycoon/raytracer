@@ -35,25 +35,6 @@ float degToRad(float angle)
     return angle * M_PI / 180;
 }
 
-/*
-Ray Scene::castRay(int x, int y)
-{
-    float w = cam_.getWidth();
-    float h = cam_.getHeight();
-
-    float d = 1.0 / tan(degToRad(cam_.getFovX() / 2.0));
-    float aspectRatio = (float)cam_.getWidth() / (float)cam_.getHeight();
-
-    float pX = x + 0.5;
-    float pY = y + 0.5;
-
-    float rayX = ((2.0 * pX / w) - 1.0) * aspectRatio;
-    float rayY = 1.0 - (2.0 * pY / h);
-
-    return Ray(cam_.getCenter(), Vector3(rayX, rayY, d));
-}
-*/
-
 Vector3 reflect(Vector3 camToHit, Vector3 normal)
 {
     return camToHit - normal * (camToHit.dot(normal)) * 2.0f;
@@ -71,6 +52,71 @@ float computeSpecular(Light *light, Vector3 hitToLight, Vector3 hitToCamera,
     float dot = reflected.dot(hitToLight * -1.0f);
 
     return pow(dot, 40.0f) * 255;
+}
+
+Scene::CastRayResult* Scene::castRay(Vector3 pointing)
+{
+    CastRayResult* res = new CastRayResult();
+    
+    float minDst = INFINITY;
+    for (auto obj : objs_)
+    {
+        Ray ray(cam_.getCenter(), pointing);
+        float dst = obj->doesIntersect(ray);
+
+        if (dst > 0 && dst < minDst)
+        {
+            minDst = dst;
+            res->object = obj;
+            res->hit = ray.getOrigin() + ray.getDirection().getPosition() * dst;
+        }
+    }
+
+    return res;
+}
+
+Color Scene::castRayLight(SceneObject *object, Point3 hit, Point3 origin)
+{
+    TextureMaterial *texture = object->getTexture(origin);
+    Vector3 normal = object->getNormal(hit);
+    Vector3 hitToCamera = cam_.getCenter() - hit;
+    hitToCamera.normalize();
+
+    float diffuse = 0;
+    float specular = 0;
+    bool shadowed = false;
+    for (auto light : lights_)
+    {
+        Vector3 hitToLight = light->getPosition() - hit;
+        float lightDistance = hitToLight.magnitude();
+
+        hitToLight.normalize();
+        Ray lightRay(hit, hitToLight);
+        for (auto obj : objs_)
+        {
+            if (obj == object)
+                continue;
+
+            float dst = obj->doesIntersect(lightRay);
+            if (dst < 0.0f)
+                continue;
+
+            shadowed = true;
+        }
+
+        if (!shadowed)
+        {
+            float lightForce = light->getIntensity() * (1.0f / pow(lightDistance, 2));
+            diffuse += clamp(computeDiffuse(light, hitToLight, normal), 0.0f, 1.0f) * lightForce;
+            specular += max(0.0f, computeSpecular(light, hitToLight, hitToCamera, normal)) * lightForce;
+        }
+    }
+
+    Components c = texture->getComponents(origin);
+    Color color = texture->getColor(origin);
+
+    Color pixel = color * diffuse * c.getKd() + specular * c.getKs();
+    return pixel + color * c.getKa();
 }
 
 Image Scene::draw()
@@ -95,67 +141,13 @@ Image Scene::draw()
             Vector3 pointing = tmp.rotate(cam_.getUp(), (x - w / 2) * padX);
             pointing.normalize();
 
-            float minDst = INFINITY;
-            SceneObject *closestObject = nullptr;
-            Point3 hit;
+            CastRayResult* res = castRay(pointing);
+            SceneObject *object = res->object;
+            Point3 hit = res->hit;
 
-            for (auto obj : objs_)
+            if (object != nullptr) // intersects
             {
-                // Castray
-                Ray ray(cam_.getCenter(), pointing);
-                float dst = obj->doesIntersect(ray);
-
-                if (dst > 0 && dst < minDst)
-                {
-                    minDst = dst;
-                    closestObject = obj;
-                    hit = ray.getOrigin() + ray.getDirection().getPosition() * dst;
-                }
-            }
-
-            if (closestObject != nullptr) // intersects
-            {
-                TextureMaterial *texture = closestObject->getTexture(origin);
-                Vector3 normal = closestObject->getNormal(hit);
-                Vector3 hitToCamera = cam_.getCenter() - hit;
-                hitToCamera.normalize();
-
-                float diffuse = 0;
-                float specular = 0;
-                bool shadowed = false;
-                for (auto light : lights_)
-                {
-                    Vector3 hitToLight = light->getPosition() - hit;
-                    float lightDistance = hitToLight.magnitude();
-
-                    hitToLight.normalize();
-                    Ray lightRay(hit, hitToLight);
-                    for (auto obj : objs_)
-                    {
-                        if (obj == closestObject)
-                            continue;
-
-                        float dst = obj->doesIntersect(lightRay);
-                        if (dst < 0.0f)
-                            continue;
-
-                        shadowed = true;
-                    }
-
-                    if (!shadowed)
-                    {
-                        float lightForce = light->getIntensity() * (1.0f / pow(lightDistance, 2));
-                        diffuse += clamp(computeDiffuse(light, hitToLight, normal), 0.0f, 1.0f) * lightForce;
-                        specular += max(0.0f, computeSpecular(light, hitToLight, hitToCamera, normal)) * lightForce;
-                    }
-                }
-
-                Components c = texture->getComponents(origin);
-                Color color = texture->getColor(origin);
-
-                Color pixel = color * diffuse * c.getKd() + specular * c.getKs();
-                pixel = pixel + color * c.getKa();
-
+                Color pixel = castRayLight(object, hit, origin);
                 image.setPixel(x, y, pixel);
             }
             else // does not intersect

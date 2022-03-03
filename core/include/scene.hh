@@ -16,15 +16,22 @@ public:
     {
     }
 
+    struct CastRayResult {
+        SceneObject *object;
+        Point3 hit;
+    };
+
     const vector<SceneObject *> getObjects() const;
     const vector<Light *> getLights() const;
     const Camera getCamera() const;
-    Ray castRay(int x, int y);
+    CastRayResult* castRay(Vector3 ray);
+    Color castRayLight(SceneObject *object, Point3 hit, Point3 origin);
     Image draw();
 
     void addObject(SceneObject *object);
     void addLight(Light *light);
     void setCamera(Camera camera);
+
 
 private:
     vector<SceneObject *> objs_;
