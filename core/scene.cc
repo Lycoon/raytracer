@@ -51,10 +51,10 @@ float getSpecular(Light *light, Vector3 hitToLight, Vector3 reflected)
     return pow(dot, 40.0f) * 255;
 }
 
-Scene::CastRayResult* Scene::castRay(Ray ray)
+Scene::CastRayResult *Scene::castRay(Ray ray)
 {
-    CastRayResult* res = new CastRayResult();
-    
+    CastRayResult *res = new CastRayResult();
+
     float minDst = INFINITY;
     for (auto obj : objs_)
     {
@@ -80,7 +80,7 @@ Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_ = 0)
     Components c = texture->getComponents(ORIGIN);
     Color color = texture->getColor(ORIGIN);
     Color pixel = BLACK;
-    
+
     Vector3 normal = object->getNormal(hit);
     Vector3 hitToCamera = cam_.getCenter() - hit;
     hitToCamera.normalize();
@@ -96,13 +96,13 @@ Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_ = 0)
         hitToLight.normalize();
 
         Ray lightRay(hit, hitToLight);
-        CastRayResult* res = castRay(lightRay);
+        CastRayResult *res = castRay(lightRay);
         if (res->object != nullptr)
             shadowed = true;
 
         float shadowRatio = shadowed ? 0.4f : 1.0f;
         float luminance = light->getIntensity() * (1.0f / pow(lightDistance, 2)) * shadowRatio;
-        
+
         Color i_d = color * c.getKd() * getDiffuse(light, hitToLight, normal) * luminance;
         float i_s = c.getKs() * getSpecular(light, hitToLight, reflected) * luminance;
 
@@ -111,7 +111,7 @@ Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_ = 0)
         pixel = pixel + i_sum;
     }
 
-    CastRayResult* rebound = castRay(Ray(hit, reflected));
+    CastRayResult *rebound = castRay(Ray(hit, reflected));
     if (rebound->object == nullptr)
         return pixel + pixel * c.getKa();
 
@@ -142,7 +142,7 @@ Image Scene::render()
             Vector3 pointing = tmp.rotate(cam_.getUp(), (x - w / 2) * padX);
             pointing.normalize();
 
-            CastRayResult* res = castRay(Ray(cam_.getCenter(), pointing));
+            CastRayResult *res = castRay(Ray(cam_.getCenter(), pointing));
             SceneObject *object = res->object;
             Point3 hit = res->hit;
 
