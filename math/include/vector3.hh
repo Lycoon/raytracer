@@ -12,7 +12,8 @@ public:
         : pos_(position){};
     Vector3()
         : pos_()
-    {}
+    {
+    }
     Vector3(float x, float y, float z)
         : pos_(Point3(x, y, z)){};
 
@@ -28,12 +29,18 @@ public:
     Vector3 operator-(const Vector3 &v) const;
     Vector3 operator*(const Vector3 &v) const;
     Vector3 operator/(const Vector3 &v) const;
-    bool operator==(const Vector3 &v) const;
 
     Vector3 operator+(const float &l) const;
     Vector3 operator-(const float &l) const;
     Vector3 operator*(const float &l) const;
     Vector3 operator/(const float &l) const;
+
+    Vector3 &operator+=(const Vector3 &v);
+    Vector3 &operator-=(const Vector3 &v);
+    Vector3 &operator*=(const Vector3 &v);
+    Vector3 &operator/=(const Vector3 &v);
+
+    bool operator==(const Vector3 &v) const;
 
 private:
     Point3 pos_;

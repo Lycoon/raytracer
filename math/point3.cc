@@ -62,6 +62,78 @@ Point3 Point3::operator/(const Point3 &p) const
     return Point3(x_ / p.getX(), y_ / p.getY(), z_ / p.getZ());
 }
 
+Point3 &Point3::operator+=(const Point3 &l)
+{
+    x_ += l.getX();
+    y_ += l.getY();
+    z_ += l.getZ();
+
+    return *this;
+}
+
+Point3 &Point3::operator-=(const Point3 &l)
+{
+    x_ -= l.getX();
+    y_ -= l.getY();
+    z_ -= l.getZ();
+
+    return *this;
+}
+
+Point3 &Point3::operator*=(const Point3 &l)
+{
+    x_ *= l.getX();
+    y_ *= l.getY();
+    z_ *= l.getZ();
+
+    return *this;
+}
+
+Point3 &Point3::operator/=(const Point3 &l)
+{
+    x_ /= l.getX();
+    y_ /= l.getY();
+    z_ /= l.getZ();
+
+    return *this;
+}
+
+Point3 &Point3::operator+=(const float &l)
+{
+    x_ += l;
+    y_ += l;
+    z_ += l;
+
+    return *this;
+}
+
+Point3 &Point3::operator-=(const float &l)
+{
+    x_ -= l;
+    y_ -= l;
+    z_ -= l;
+
+    return *this;
+}
+
+Point3 &Point3::operator*=(const float &l)
+{
+    x_ *= l;
+    y_ *= l;
+    z_ *= l;
+
+    return *this;
+}
+
+Point3 &Point3::operator/=(const float &l)
+{
+    x_ /= l;
+    y_ /= l;
+    z_ /= l;
+
+    return *this;
+}
+
 // Print
 ostream &operator<<(ostream &out, Point3 &p)
 {

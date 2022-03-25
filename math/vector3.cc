@@ -102,6 +102,30 @@ Vector3 Vector3::operator/(const Vector3 &v) const
     return Vector3(pos_ / v.getPosition());
 }
 
+Vector3 &Vector3::operator+=(const Vector3 &v)
+{
+    pos_ += v.pos_;
+    return *this;
+}
+
+Vector3 &Vector3::operator-=(const Vector3 &v)
+{
+    pos_ -= v.pos_;
+    return *this;
+}
+
+Vector3 &Vector3::operator*=(const Vector3 &v)
+{
+    pos_ *= v.pos_;
+    return *this;
+}
+
+Vector3 &Vector3::operator/=(const Vector3 &v)
+{
+    pos_ /= v.pos_;
+    return *this;
+}
+
 bool Vector3::operator==(const Vector3 &v) const
 {
     return pos_.getX() == v.pos_.getX() && pos_.getY() == v.pos_.getY() && pos_.getZ() == v.pos_.getZ();

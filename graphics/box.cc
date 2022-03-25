@@ -79,15 +79,15 @@ float sign(float value)
 Vector3 Box::getNormal(Point3 p)
 {
     Vector3 pc = p - center_;
+    auto d = (p_min_ - p_max_) * 0.5;
+    auto bias = 1.000001;
 
-    Vector3 normal;
+    Vector3 normal = Vector3(p.getX() / fabs(d.getX()) * bias,
+                             p.getY() / fabs(d.getY()) * bias,
+                             p.getZ() / fabs(d.getZ()) * bias);
+    normal.normalize();
 
-    Vector3 normalX = Vector3(sign(pc.getPosition().getX()), 0, 0);
-    Vector3 normalY = normalX + Vector3(0, sign(pc.getPosition().getY()), 0);
-    Vector3 normalZ = normalY + Vector3(0, 0, sign(pc.getPosition().getZ()));
-    normalZ.normalize();
-
-    return normalZ;
+    return normal;
 }
 
 TextureMaterial *Box::getTexture(Point3 p)
