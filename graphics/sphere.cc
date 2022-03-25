@@ -13,12 +13,10 @@ const float Sphere::getRadius() const
 }
 
 /**
- * @brief Checks whether a ray hits a sphere by returning its distance to the
- * hit -1 if no intersection found
+ * @brief Checks whether a ray hits a sphere
  *
- * @param startPoint
- * @param direction
- * @return float
+ * @param Ray
+ * @return distance to the hit, -1 if no intersection found (float)
  */
 float Sphere::doesIntersect(Ray ray)
 {
