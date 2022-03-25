@@ -78,7 +78,6 @@ float sign(float value)
 
 Vector3 Box::getNormal(Point3 p)
 {
-    Vector3 pc = p - center_;
     auto d = (p_min_ - p_max_) * 0.5;
     auto bias = 1.000001;
 
