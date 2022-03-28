@@ -8,10 +8,9 @@ class Box : public SceneObject
 {
 public:
     Box(Point3 p_min, Point3 p_max, UniformTexture *texture)
-        : SceneObject(texture), p_min_(p_min), p_max_(p_max)
+        : SceneObject(texture, "box"), p_min_(p_min), p_max_(p_max)
     {
         center_ = (p_min + p_max) / 2;
-
         size = Vector3(fabs(p_max.getX() - p_min.getX()), fabs(p_max.getY() - p_min.getY()), fabs(p_max.getZ() - p_min.getZ()));
     }
 

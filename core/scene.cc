@@ -101,11 +101,9 @@ Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_ = 0)
             shadowed = true;
 
         float shadowRatio = shadowed ? 0.4f : 1.0f;
-        float luminance = light->getIntensity() * (1.0f / pow(lightDistance, 2))
-            * shadowRatio;
+        float luminance = light->getIntensity() * (1.0f / pow(lightDistance, 2)) * shadowRatio;
 
-        Color i_d = color * c.getKd() * getDiffuse(light, hitToLight, normal)
-            * luminance;
+        Color i_d = color * c.getKd() * getDiffuse(light, hitToLight, normal) * luminance;
         float i_s =
             c.getKs() * getSpecular(light, hitToLight, reflected) * luminance;
 

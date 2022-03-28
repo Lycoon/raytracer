@@ -16,6 +16,8 @@ public:
     float getY() const;
     float getZ() const;
 
+    void abs();
+
     Point3 operator+(const Point3 &p) const;
     Point3 operator-(const Point3 &p) const;
     Point3 operator*(const Point3 &p) const;

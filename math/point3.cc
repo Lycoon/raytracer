@@ -20,6 +20,13 @@ float Point3::getZ() const
     return z_;
 }
 
+void Point3::abs()
+{
+    x_ = fabs(x_);
+    y_ = fabs(y_);
+    z_ = fabs(z_);
+}
+
 // Float operations
 Point3 Point3::operator+(const float &l) const
 {

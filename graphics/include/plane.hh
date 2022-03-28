@@ -4,8 +4,7 @@ class Plane : public SceneObject
 {
 public:
     Plane(Point3 position, Vector3 normal, UniformTexture *texture)
-        : SceneObject(texture)
-        , position_(position)
+        : SceneObject(texture, "plane"), position_(position)
     {
         normal.normalize();
         normal_ = normal;

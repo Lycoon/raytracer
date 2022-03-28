@@ -38,7 +38,7 @@ float Sphere::doesIntersect(Ray ray)
         numerator = -b + sqrt(delta);
         if (numerator > 0.0)
             return numerator / (2.0 * a);
-            
+
         return -1;
     }
 }

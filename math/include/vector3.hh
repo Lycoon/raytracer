@@ -20,6 +20,7 @@ public:
     Vector3 cross(const Vector3 &v) const;
     float dot(const Vector3 &v) const;
     float magnitude() const;
+    void abs();
     void normalize();
     Vector3 rotate(Vector3 axis, float angle);
 

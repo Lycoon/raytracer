@@ -8,10 +8,9 @@ class Sphere : public SceneObject
 {
 public:
     Sphere(float radius, Point3 center, UniformTexture *texture)
-        : SceneObject(texture)
-        , radius_(radius)
-        , center_(center)
-    {}
+        : SceneObject(texture, "sphere"), radius_(radius), center_(center)
+    {
+    }
 
     const Point3 &getCenter() const;
     const float getRadius() const;

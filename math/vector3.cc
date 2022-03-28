@@ -2,6 +2,11 @@
 
 #include <iostream>
 
+void Vector3::abs()
+{
+    pos_.abs();
+}
+
 Vector3 Vector3::cross(const Vector3 &v) const
 {
     Point3 posA = getPosition();

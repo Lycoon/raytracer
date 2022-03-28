@@ -2,6 +2,8 @@
 
 #include "include/uniform-texture.hh"
 
+#include <algorithm>
+
 const Point3 &Box::getCenter() const
 {
     return center_;
@@ -78,15 +80,27 @@ float sign(float value)
 
 Vector3 Box::getNormal(Point3 p)
 {
-    auto d = (p_min_ - p_max_) * 0.5;
-    auto bias = 1.000001;
+    float eps = 0.0001f;
+    bool diffX_pMin = fabs(p.getX() - p_min_.getX()) <= eps;
+    bool diffY_pMin = fabs(p.getY() - p_min_.getY()) <= eps;
+    bool diffZ_pMin = fabs(p.getZ() - p_min_.getZ()) <= eps;
 
-    Vector3 normal = Vector3(p.getX() / fabs(d.getX()) * bias,
-                             p.getY() / fabs(d.getY()) * bias,
-                             p.getZ() / fabs(d.getZ()) * bias);
-    normal.normalize();
+    bool diffX_pMax = fabs(p.getX() - p_max_.getX()) <= eps;
+    bool diffY_pMax = fabs(p.getY() - p_max_.getY()) <= eps;
+    bool diffZ_pMax = fabs(p.getZ() - p_max_.getZ()) <= eps;
 
-    return normal;
+    if (diffX_pMin)
+        return Vector3(p_min_.getX() > p_max_.getX() ? 1 : -1, 0, 0);
+    else if (diffY_pMin)
+        return Vector3(0, p_min_.getY() > p_max_.getY() ? 1 : -1, 0);
+    else if (diffZ_pMin)
+        return Vector3(0, 0, p_min_.getZ() > p_max_.getZ() ? 1 : -1);
+    else if (diffX_pMax)
+        return Vector3(p_min_.getX() > p_max_.getX() ? -1 : 1, 0, 0);
+    else if (diffY_pMax)
+        return Vector3(0, p_min_.getY() > p_max_.getY() ? -1 : 1, 0);
+    else if (diffZ_pMax)
+        return Vector3(0, 0, p_min_.getZ() > p_max_.getZ() ? -1 : 1);
 }
 
 TextureMaterial *Box::getTexture(Point3 p)
