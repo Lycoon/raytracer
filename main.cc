@@ -7,6 +7,7 @@
 #include "graphics/include/point-light.hh"
 #include "graphics/include/sphere.hh"
 #include "graphics/include/triangle.hh"
+#include "graphics/include/mengen_sponge.hh"
 
 using namespace std;
 
@@ -36,16 +37,19 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     auto plane1 = Plane(Point3(0, -2, 0), Vector3(0, 1, 0), &pla1_color);
     auto tri1 = Triangle(Point3(2.0, -1, 3), Point3(2.0, 2, 0),
                          Point3(2.0, -1, -3), &obj1_color);
-    auto box1 = Box(Point3(0, -0.5, -1), Point3(-1, 0.5, 1), &box1_color);
+    // auto box1 = Box(Point3(0, -0.5, -1), Point3(-1, 0.5, 1), &box1_color);
+
+    auto sponge = Sponge(3, {0, 0, 0}, {2, 2, 2}, &box1_color);
+
     auto objects = vector<SceneObject *>{&plane1, &obj1, &obj2, &obj3,
-                                         &obj4, &tri1, &box1};
+                                         &obj4, &tri1, &sponge};
 
     // Lights
     auto pointLight = PointLight(Point3(-2, 5, 3), 50.0f);
     auto lights = vector<Light *>{&pointLight};
 
     // Camera
-    Point3 cameraPos = Point3(-5, 0, 0);
+    Point3 cameraPos = Point3(-2, 0, 0);
     Vector3 cameraDir = Vector3(1, 0, 0);
     Vector3 cameraUp = Vector3(0, 1, 0);
     auto camera = Camera(cameraPos, cameraDir, cameraUp, width, height, fov);
