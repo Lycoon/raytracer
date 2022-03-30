@@ -21,6 +21,7 @@ public:
     const int getRed() const;
     const int getGreen() const;
     const int getBlue() const;
+    void clamp();
 
     Color operator+(const float &l) const;
     Color operator-(const float &l) const;
@@ -31,6 +32,16 @@ public:
     Color operator-(const Color &c) const;
     Color operator*(const Color &c) const;
     Color operator/(const Color &c) const;
+
+    Color &operator+=(const float &l);
+    Color &operator-=(const float &l);
+    Color &operator*=(const float &l);
+    Color &operator/=(const float &l);
+
+    Color &operator+=(const Color &c);
+    Color &operator-=(const Color &c);
+    Color &operator*=(const Color &c);
+    Color &operator/=(const Color &c);
 
 private:
     int r_, g_, b_;

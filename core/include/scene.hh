@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 #include "camera.hh"
 #include "image.hh"
@@ -12,9 +12,10 @@ class Scene
 {
 public:
     Scene(vector<SceneObject *> objects, vector<Light *> lights, Camera camera)
-        : objs_(objects), lights_(lights), cam_(camera)
-    {
-    }
+        : objs_(objects)
+        , lights_(lights)
+        , cam_(camera)
+    {}
 
     const Color BLACK = Color(0, 0, 0);
     const Point3 ORIGIN = Point3(0, 0, 0);

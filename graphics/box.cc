@@ -1,8 +1,8 @@
 #include "include/box.hh"
 
-#include "include/uniform-texture.hh"
-
 #include <algorithm>
+
+#include "include/uniform-texture.hh"
 
 const Point3 &Box::getCenter() const
 {
@@ -99,8 +99,7 @@ Vector3 Box::getNormal(Point3 p)
         return Vector3(p_min_.getX() > p_max_.getX() ? -1 : 1, 0, 0);
     else if (diffY_pMax)
         return Vector3(0, p_min_.getY() > p_max_.getY() ? -1 : 1, 0);
-    else if (diffZ_pMax)
-        return Vector3(0, 0, p_min_.getZ() > p_max_.getZ() ? -1 : 1);
+    return Vector3(0, 0, p_min_.getZ() > p_max_.getZ() ? -1 : 1);
 }
 
 TextureMaterial *Box::getTexture(Point3 p)

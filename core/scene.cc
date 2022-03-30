@@ -47,8 +47,7 @@ float getDiffuse(Light *light, Vector3 hitToLight, Vector3 normal)
 
 float getSpecular(Light *light, Vector3 hitToLight, Vector3 reflected)
 {
-    float dot = reflected.dot(hitToLight);
-    return pow(dot, 40.0f) * 255;
+    return pow(reflected.dot(hitToLight), 41.0f) * 255;
 }
 
 Scene::CastRayResult *Scene::castRay(Ray ray)
@@ -77,8 +76,8 @@ Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_ = 0)
         return BLACK;
 
     TextureMaterial *texture = object->getTexture(ORIGIN);
-    Components c = texture->getComponents(ORIGIN);
-    Color color = texture->getColor(ORIGIN);
+    Components mat = texture->getComponents(ORIGIN);
+    Color objColor = texture->getColor(ORIGIN);
     Color pixel = BLACK;
 
     Vector3 normal = object->getNormal(hit);
@@ -100,26 +99,30 @@ Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_ = 0)
         if (res->object != nullptr)
             shadowed = true;
 
-        float shadowRatio = shadowed ? 0.4f : 1.0f;
-        float luminance = light->getIntensity() * (1.0f / pow(lightDistance, 2)) * shadowRatio;
+        float shadowRatio = shadowed ? 0.4 : 1;
+        float luminance =
+            light->getIntensity() * (1.0 / pow(lightDistance, 2)) * shadowRatio;
 
-        Color i_d = color * c.getKd() * getDiffuse(light, hitToLight, normal) * luminance;
+        float i_d =
+            mat.getKd() * getDiffuse(light, hitToLight, normal) * luminance;
         float i_s =
-            c.getKs() * getSpecular(light, hitToLight, reflected) * luminance;
+            mat.getKs() * getSpecular(light, hitToLight, reflected) * luminance;
 
-        Color i_sColor(i_s, i_s, i_s);
-        Color i_sum = i_d + i_sColor;
-        pixel = pixel + i_sum;
+        pixel = objColor * i_d + Color(1, 1, 1) * i_s;
     }
 
-    CastRayResult *rebound = castRay(Ray(hit, reflected));
-    if (rebound->object == nullptr)
-        return pixel + pixel * c.getKa();
+    if (rec_ < MAX_RECURSION_DEPTH)
+    {
+        CastRayResult *rebound = castRay(Ray(hit, reflected));
+        if (rebound->object == nullptr)
+            return pixel + pixel * mat.getKa();
 
-    Color reboundColor = castRayLight(rebound->object, rebound->hit, rec_ + 1);
-    pixel = pixel + reboundColor * reflectLoss * c.getKs();
+        Color reboundColor =
+            castRayLight(rebound->object, rebound->hit, rec_ + 1);
+        pixel = pixel + reboundColor * reflectLoss * mat.getKs();
+    }
 
-    return pixel + pixel * c.getKa();
+    return pixel + pixel * mat.getKa();
 }
 
 Image Scene::render()
@@ -140,6 +143,11 @@ Image Scene::render()
         Vector3 tmp = forward.rotate(cam_.getRight(), (y - h / 2) * padY);
         for (float x = 0.0; x < w; x++)
         {
+            /*
+            if (x != 219 || y != 443)
+                continue;
+            */
+
             Vector3 pointing = tmp.rotate(cam_.getUp(), (x - w / 2) * padX);
             pointing.normalize();
 
