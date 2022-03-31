@@ -3,7 +3,7 @@
 #include "core/include/image.hh"
 #include "core/include/scene.hh"
 #include "graphics/include/box.hh"
-#include "graphics/include/mengen_sponge.hh"
+#include "graphics/include/mengen-sponge.hh"
 #include "graphics/include/plane.hh"
 #include "graphics/include/point-light.hh"
 #include "graphics/include/sphere.hh"
@@ -28,28 +28,27 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     auto obj3_color = UniformTexture(Color(227, 15, 30), matObj);
     auto obj4_color = UniformTexture(Color(210, 40, 110), matObj);
     auto pla1_color = UniformTexture(Color(200, 150, 120), matPlane);
-    auto box1_color = UniformTexture(Color(255, 0, 0), matBox);
+    auto box1_color = UniformTexture(Color(255, 255, 255), matBox);
 
-    auto obj1 = Sphere(0.5, Point3(-1, -1.5, 2.5), &obj1_color);
-    auto obj2 = Sphere(2.5, Point3(7, 4, 1), &obj2_color);
-    auto obj3 = Sphere(1, Point3(1, -1, -2.5), &obj3_color);
-    auto obj4 = Sphere(0.5, Point3(-2, -1.5, 0.5), &obj4_color);
-    auto plane1 = Plane(Point3(0, -2, 0), Vector3(0, 1, 0), &pla1_color);
-    auto tri1 = Triangle(Point3(2.0, -1, 3), Point3(2.0, 2, 0),
-                         Point3(2.0, -1, -3), &obj1_color);
-    // auto box1 = Box(Point3(0, -0.5, -1), Point3(-1, 0.5, 1), &box1_color);
-
+    auto obj1 = Sphere(0.5, Vector3(-1, -1.5, 2.5), &obj1_color);
+    auto obj2 = Sphere(2.5, Vector3(7, 4, 1), &obj2_color);
+    auto obj3 = Sphere(1, Vector3(1, -1, -2.5), &obj3_color);
+    auto obj4 = Sphere(0.5, Vector3(-2, -1.5, 0.5), &obj4_color);
+    auto plane1 = Plane(Vector3(0, -2, 0), Vector3(0, 1, 0), &pla1_color);
+    auto tri1 = Triangle(Vector3(2.0, -1, 3), Vector3(2.0, 2, 0),
+                         Vector3(2.0, -1, -3), &obj1_color);
+    // auto box1 = Box(Vector3(0, -0.5, -1), Vector3(-1, 0.5, 1), &box1_color);
     auto sponge = Sponge(2, { 0, 0, 0 }, { 2, 2, 2 }, &box1_color);
 
     auto objects = vector<SceneObject *>{ &plane1, &obj1, &obj2,  &obj3,
                                           &obj4,   &tri1, &sponge };
 
     // Lights
-    auto pointLight = PointLight(Point3(-2, 5, 3), 50.0f);
+    auto pointLight = PointLight(Vector3(-2, 5, 3), 50.0f);
     auto lights = vector<Light *>{ &pointLight };
 
     // Camera
-    Point3 cameraPos = Point3(-2, 0, 0);
+    Vector3 cameraPos = Vector3(-2, 0, 0);
     Vector3 cameraDir = Vector3(1, 0, 0);
     Vector3 cameraUp = Vector3(0, 1, 0);
     auto camera = Camera(cameraPos, cameraDir, cameraUp, width, height, fov);

@@ -18,20 +18,20 @@ public:
     {}
 
     const Color BLACK = Color(0, 0, 0);
-    const Point3 ORIGIN = Point3(0, 0, 0);
+    const Vector3 ORIGIN = Vector3(0, 0, 0);
     const int MAX_RECURSION_DEPTH = 1;
 
     struct CastRayResult
     {
         SceneObject *object;
-        Point3 hit;
+        Vector3 hit;
     };
 
     const vector<SceneObject *> getObjects() const;
     const vector<Light *> getLights() const;
     const Camera getCamera() const;
     CastRayResult *castRay(Ray ray);
-    Color castRayLight(SceneObject *object, Point3 hit, int rec_);
+    Color castRayLight(SceneObject *object, Vector3 hit, int rec_);
     Image render();
 
     void addObject(SceneObject *object);

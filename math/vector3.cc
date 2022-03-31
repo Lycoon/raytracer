@@ -4,34 +4,28 @@
 
 void Vector3::abs()
 {
-    pos_.abs();
+    x_ = fabs(x_);
+    y_ = fabs(y_);
+    z_ = fabs(z_);
 }
 
 Vector3 Vector3::cross(const Vector3 &v) const
 {
-    Point3 posA = getPosition();
-    Point3 posB = v.getPosition();
-
-    float crossX = posA.getY() * posB.getZ() - posA.getZ() * posB.getY();
-    float crossY = posA.getZ() * posB.getX() - posA.getX() * posB.getZ();
-    float crossZ = posA.getX() * posB.getY() - posA.getY() * posB.getX();
+    float crossX = y_ * v.Z() - z_ * v.Y();
+    float crossY = z_ * v.X() - x_ * v.Z();
+    float crossZ = x_ * v.Y() - y_ * v.X();
 
     return Vector3(crossX, crossY, crossZ);
 }
 
 float Vector3::dot(const Vector3 &v) const
 {
-    Point3 prod = pos_ * v.getPosition();
-    return prod.getX() + prod.getY() + prod.getZ();
+    return x_ * v.X() + y_ * v.Y() + z_ * v.Z();
 }
 
 float Vector3::magnitude() const
 {
-    float x = pos_.getX();
-    float y = pos_.getY();
-    float z = pos_.getZ();
-
-    return sqrt(x * x + y * y + z * z);
+    return sqrt(x_ * x_ + y_ * y_ + z_ * z_);
 }
 
 void Vector3::normalize()
@@ -40,7 +34,7 @@ void Vector3::normalize()
     if (mag == 0.0)
         return;
 
-    pos_ = pos_ / mag;
+    *this /= mag;
 }
 
 Vector3 Vector3::rotate(Vector3 axis, float angle)
@@ -55,89 +49,148 @@ Vector3 Vector3::rotate(Vector3 axis, float angle)
     return a + b + c;
 }
 
-void Vector3::setPosition(Point3 newPos)
+void Vector3::updatePosition(float x, float y, float z)
 {
-    pos_ = newPos;
+    x_ = x;
+    y_ = y;
+    z_ = z;
 }
 
-Point3 Vector3::getPosition() const
+float Vector3::X() const
 {
-    return pos_;
+    return x_;
+}
+
+float Vector3::Y() const
+{
+    return y_;
+}
+
+float Vector3::Z() const
+{
+    return z_;
 }
 
 // Float operations
 Vector3 Vector3::operator+(const float &l) const
 {
-    return Vector3(pos_ + l);
+    return Vector3(x_ + l, y_ + l, z_ + l);
 }
 
 Vector3 Vector3::operator-(const float &l) const
 {
-    return Vector3(pos_ - l);
+    return Vector3(x_ - l, y_ - l, z_ - l);
 }
 
 Vector3 Vector3::operator*(const float &l) const
 {
-    return Vector3(pos_ * l);
+    return Vector3(x_ * l, y_ * l, z_ * l);
 }
 
 Vector3 Vector3::operator/(const float &l) const
 {
-    return Vector3(pos_ / l);
+    return Vector3(x_ / l, y_ / l, z_ / l);
 }
 
 // Vector3 operations
 Vector3 Vector3::operator+(const Vector3 &v) const
 {
-    return Vector3(pos_ + v.getPosition());
+    return Vector3(x_ + v.X(), y_ + v.Y(), z_ + v.Z());
 }
 
 Vector3 Vector3::operator-(const Vector3 &v) const
 {
-    return Vector3(pos_ - v.getPosition());
+    return Vector3(x_ - v.X(), y_ - v.Y(), z_ - v.Z());
 }
 
 Vector3 Vector3::operator*(const Vector3 &v) const
 {
-    return Vector3(pos_ * v.getPosition());
+    return Vector3(x_ * v.X(), y_ * v.Y(), z_ * v.Z());
 }
 
 Vector3 Vector3::operator/(const Vector3 &v) const
 {
-    return Vector3(pos_ / v.getPosition());
+    return Vector3(x_ / v.X(), y_ / v.Y(), z_ / v.Z());
 }
 
 Vector3 &Vector3::operator+=(const Vector3 &v)
 {
-    pos_ += v.pos_;
+    x_ += v.X();
+    y_ += v.Y();
+    z_ += v.Z();
+
     return *this;
 }
 
 Vector3 &Vector3::operator-=(const Vector3 &v)
 {
-    pos_ -= v.pos_;
+    x_ -= v.X();
+    y_ -= v.Y();
+    z_ -= v.Z();
+
     return *this;
 }
 
 Vector3 &Vector3::operator*=(const Vector3 &v)
 {
-    pos_ *= v.pos_;
+    x_ *= v.X();
+    y_ *= v.Y();
+    z_ *= v.Z();
+
     return *this;
 }
 
 Vector3 &Vector3::operator/=(const Vector3 &v)
 {
-    pos_ /= v.pos_;
+    x_ /= v.X();
+    y_ /= v.Y();
+    z_ /= v.Z();
+
+    return *this;
+}
+
+Vector3 &Vector3::operator+=(const float &l)
+{
+    x_ += l;
+    y_ += l;
+    z_ += l;
+
+    return *this;
+}
+
+Vector3 &Vector3::operator-=(const float &l)
+{
+    x_ -= l;
+    y_ -= l;
+    z_ -= l;
+
+    return *this;
+}
+
+Vector3 &Vector3::operator*=(const float &l)
+{
+    x_ *= l;
+    y_ *= l;
+    z_ *= l;
+
+    return *this;
+}
+
+Vector3 &Vector3::operator/=(const float &l)
+{
+    x_ /= l;
+    y_ /= l;
+    z_ /= l;
+
     return *this;
 }
 
 bool Vector3::operator==(const Vector3 &v) const
 {
-    return pos_.getX() == v.pos_.getX() && pos_.getY() == v.pos_.getY() && pos_.getZ() == v.pos_.getZ();
+    return x_ == v.X() && y_ == v.Y() && z_ == v.Z();
 }
 
-ostream &operator<<(ostream &out, Vector3 &vect3)
+ostream &operator<<(ostream &out, Vector3 &v)
 {
-    Point3 pos = vect3.getPosition();
-    return out << "Vect3(" << pos << ")";
+    return out << "Vector3{" << v.X() << ", " << v.Y() << ", " << v.Z() << "}";
 }

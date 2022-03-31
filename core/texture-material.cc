@@ -15,7 +15,7 @@ const float Components::getKa() const
     return ka_;
 }
 
-Components TextureMaterial::getComponents(Point3 p) const
+Components TextureMaterial::getComponents(Vector3 p) const
 {
     return comps_;
 }

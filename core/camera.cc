@@ -3,7 +3,7 @@
 #include <iostream>
 
 // Getters
-Point3 Camera::getCenter() const
+Vector3 Camera::getCenter() const
 {
     return center_;
 }
@@ -75,7 +75,7 @@ void Camera::updateFovY()
 // Print
 ostream &operator<<(ostream &out, Camera &cam)
 {
-    Point3 center = cam.getCenter();
+    Vector3 center = cam.getCenter();
     Vector3 forward = cam.getForward();
     Vector3 up = cam.getUp();
     float fovX = cam.getFovX();

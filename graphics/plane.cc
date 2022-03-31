@@ -1,6 +1,6 @@
 #include "include/plane.hh"
 
-const Point3 &Plane::getPosition() const
+const Vector3 &Plane::getPosition() const
 {
     return position_;
 }
@@ -20,12 +20,12 @@ float Plane::doesIntersect(Ray ray)
     return t;
 }
 
-Vector3 Plane::getNormal(Point3 p)
+Vector3 Plane::getNormal(Vector3 p)
 {
     return normal_;
 }
 
-TextureMaterial *Plane::getTexture(Point3 p)
+TextureMaterial *Plane::getTexture(Vector3 p)
 {
     return texture_;
 }

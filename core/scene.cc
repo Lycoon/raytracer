@@ -63,14 +63,14 @@ Scene::CastRayResult *Scene::castRay(Ray ray)
         {
             minDst = dst;
             res->object = obj;
-            res->hit = ray.getOrigin() + ray.getDirection().getPosition() * dst;
+            res->hit = ray.getOrigin() + ray.getDirection() * dst;
         }
     }
 
     return res;
 }
 
-Color Scene::castRayLight(SceneObject *object, Point3 hit, int rec_ = 0)
+Color Scene::castRayLight(SceneObject *object, Vector3 hit, int rec_ = 0)
 {
     if (rec_ >= MAX_RECURSION_DEPTH) // stopping reflection
         return BLACK;
@@ -153,7 +153,7 @@ Image Scene::render()
 
             CastRayResult *res = castRay(Ray(cam_.getCenter(), pointing));
             SceneObject *object = res->object;
-            Point3 hit = res->hit;
+            Vector3 hit = res->hit;
 
             if (object != nullptr) // intersects
             {

@@ -7,23 +7,26 @@
 class Box : public SceneObject
 {
 public:
-    Box(Point3 p_min, Point3 p_max, UniformTexture *texture)
-        : SceneObject(texture, "box"), p_min_(p_min), p_max_(p_max)
+    Box(Vector3 p_min, Vector3 p_max, UniformTexture *texture)
+        : SceneObject(texture, "box")
+        , p_min_(p_min)
+        , p_max_(p_max)
     {
         center_ = (p_min + p_max) / 2;
-        size = Vector3(fabs(p_max.getX() - p_min.getX()), fabs(p_max.getY() - p_min.getY()), fabs(p_max.getZ() - p_min.getZ()));
+        size = Vector3(fabs(p_max.X() - p_min.X()), fabs(p_max.Y() - p_min.Y()),
+                       fabs(p_max.Z() - p_min.Z()));
     }
 
-    const Point3 &getPMin() const;
-    const Point3 &getPMax() const;
-    const Point3 &getCenter() const;
+    const Vector3 &getPMin() const;
+    const Vector3 &getPMax() const;
+    const Vector3 &getCenter() const;
 
     float doesIntersect(Ray ray);
-    Vector3 getNormal(Point3 p);
-    TextureMaterial *getTexture(Point3 p);
+    Vector3 getNormal(Vector3 p);
+    TextureMaterial *getTexture(Vector3 p);
 
 private:
-    Point3 p_min_, p_max_, center_;
+    Vector3 p_min_, p_max_, center_;
     Vector3 size;
 };
 

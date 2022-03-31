@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../../math/include/point3.hh"
+#include "../../math/include/vector3.hh"
 #include "color.hh"
 
 class Components
@@ -30,8 +30,8 @@ public:
         , comps_(components)
     {}
 
-    Components getComponents(Point3 p) const;
-    virtual Color getColor(Point3 p) const = 0;
+    Components getComponents(Vector3 p) const;
+    virtual Color getColor(Vector3 p) const = 0;
 
 protected:
     Color color_;

@@ -10,5 +10,5 @@ public:
         : TextureMaterial(color, components)
     {}
 
-    Color getColor(Point3 p) const;
+    Color getColor(Vector3 p) const;
 };

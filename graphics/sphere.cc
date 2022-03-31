@@ -2,7 +2,7 @@
 
 #include "include/uniform-texture.hh"
 
-const Point3 &Sphere::getCenter() const
+const Vector3 &Sphere::getCenter() const
 {
     return center_;
 }
@@ -43,7 +43,7 @@ float Sphere::doesIntersect(Ray ray)
     }
 }
 
-Vector3 Sphere::getNormal(Point3 p)
+Vector3 Sphere::getNormal(Vector3 p)
 {
     Vector3 normal = p - center_;
     normal.normalize();
@@ -51,14 +51,14 @@ Vector3 Sphere::getNormal(Point3 p)
     return normal;
 }
 
-TextureMaterial *Sphere::getTexture(Point3 p)
+TextureMaterial *Sphere::getTexture(Vector3 p)
 {
     return texture_;
 }
 
 ostream &operator<<(ostream &out, Sphere &sphere)
 {
-    Point3 center = sphere.getCenter();
+    Vector3 center = sphere.getCenter();
 
     out << "Sphere(" << endl
         << "  center = " << center << "," << endl

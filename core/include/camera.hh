@@ -9,7 +9,7 @@ using namespace std;
 class Camera
 {
 public:
-    Camera(Point3 center, Vector3 forward, Vector3 up, int width, int height,
+    Camera(Vector3 center, Vector3 forward, Vector3 up, int width, int height,
            float fovX = 90)
         : center_(center)
         , forward_(forward)
@@ -31,7 +31,7 @@ public:
     void setWidth(int newWidth);
     void updateFovY();
 
-    Point3 getCenter() const;
+    Vector3 getCenter() const;
     Vector3 getForward() const;
     Vector3 getUp() const;
     Vector3 getRight() const;
@@ -42,7 +42,7 @@ public:
     float getZMin() const;
 
 private:
-    Point3 center_;
+    Vector3 center_;
     Vector3 forward_, up_, right_;
     float fovX_, fovY_, zMin_;
     int width_, height_;

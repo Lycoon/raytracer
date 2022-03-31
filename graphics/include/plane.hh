@@ -3,20 +3,21 @@
 class Plane : public SceneObject
 {
 public:
-    Plane(Point3 position, Vector3 normal, UniformTexture *texture)
-        : SceneObject(texture, "plane"), position_(position)
+    Plane(Vector3 position, Vector3 normal, UniformTexture *texture)
+        : SceneObject(texture, "plane")
+        , position_(position)
     {
         normal.normalize();
         normal_ = normal;
     }
 
-    const Point3 &getPosition() const;
+    const Vector3 &getPosition() const;
 
     float doesIntersect(Ray ray);
-    Vector3 getNormal(Point3 p);
-    TextureMaterial *getTexture(Point3 p);
+    Vector3 getNormal(Vector3 p);
+    TextureMaterial *getTexture(Vector3 p);
 
 private:
-    Point3 position_;
+    Vector3 position_;
     Vector3 normal_;
 };

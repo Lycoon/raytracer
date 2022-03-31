@@ -1,6 +1,6 @@
 #include "include/light.hh"
 
-const Point3 Light::getPosition() const
+const Vector3 Light::getPosition() const
 {
     return pos_;
 }

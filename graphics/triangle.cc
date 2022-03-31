@@ -1,6 +1,6 @@
 #include "include/triangle.hh"
 
-const vector<Point3> Triangle::getVertices() const
+const vector<Vector3> Triangle::getVertices() const
 {
     return vector{ v0_, v1_, v2_ };
 }
@@ -36,7 +36,7 @@ float Triangle::doesIntersect(Ray ray)
     return -1;
 }
 
-Vector3 Triangle::getNormal(Point3 p)
+Vector3 Triangle::getNormal(Vector3 p)
 {
     Vector3 edge1 = v1_ - v0_;
     Vector3 edge2 = v2_ - v0_;
@@ -46,7 +46,7 @@ Vector3 Triangle::getNormal(Point3 p)
     return normal;
 }
 
-TextureMaterial *Triangle::getTexture(Point3 p)
+TextureMaterial *Triangle::getTexture(Vector3 p)
 {
     return texture_;
 }

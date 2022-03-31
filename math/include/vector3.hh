@@ -1,21 +1,22 @@
 #pragma once
 
 #include <cmath>
+#include <iostream>
 #include <ostream>
 
-#include "point3.hh"
+using namespace std;
 
 class Vector3
 {
 public:
-    Vector3(Point3 position)
-        : pos_(position){};
-    Vector3()
-        : pos_()
-    {
-    }
     Vector3(float x, float y, float z)
-        : pos_(Point3(x, y, z)){};
+        : x_(x)
+        , y_(y)
+        , z_(z)
+    {}
+
+    Vector3()
+    {}
 
     Vector3 cross(const Vector3 &v) const;
     float dot(const Vector3 &v) const;
@@ -24,8 +25,11 @@ public:
     void normalize();
     Vector3 rotate(Vector3 axis, float angle);
 
-    void setPosition(Point3 newPos);
-    Point3 getPosition() const;
+    void updatePosition(float x, float y, float z);
+    float X() const;
+    float Y() const;
+    float Z() const;
+
     Vector3 operator+(const Vector3 &v) const;
     Vector3 operator-(const Vector3 &v) const;
     Vector3 operator*(const Vector3 &v) const;
@@ -41,10 +45,15 @@ public:
     Vector3 &operator*=(const Vector3 &v);
     Vector3 &operator/=(const Vector3 &v);
 
+    Vector3 &operator+=(const float &l);
+    Vector3 &operator-=(const float &l);
+    Vector3 &operator*=(const float &l);
+    Vector3 &operator/=(const float &l);
+
     bool operator==(const Vector3 &v) const;
 
 private:
-    Point3 pos_;
+    float x_, y_, z_;
 };
 
 ostream &operator<<(ostream &out, Vector3 &vect3);
