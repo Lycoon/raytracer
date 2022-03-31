@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../graphics/include/uniform-texture.hh"
 #include "../../math/include/vector3.hh"
 #include "ray.hh"
 #include "texture-material.hh"
+#include "uniform-texture.hh"
 
 using namespace std;
 

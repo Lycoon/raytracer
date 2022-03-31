@@ -44,11 +44,11 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     // auto box1 = Box(Vector3(0, -0.5, -1), Vector3(-1, 0.5, 1), &box1_color);
     auto sponge = Sponge(2, { -2, -2, -2 }, { 2, 2, 2 }, &box1_color);
 
-    auto objects = vector<SceneObject *>{ &plane1, &obj1, &obj2,  &obj3,
-                                          &obj4,   &tri1, &sponge };
+    auto objects =
+        vector<SceneObject *>{ &plane1, &obj1, &obj2, &obj3, &obj4, &tri1 };
 
     // Lights
-    auto pointLight = PointLight(Vector3(-4, 3, 3), WHITE, 50.0f);
+    auto pointLight = PointLight(Vector3(-3, 6, 3), WHITE, 50.0f);
     auto lights = vector<Light *>{ &pointLight };
 
     // Camera

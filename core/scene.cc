@@ -109,16 +109,12 @@ Color Scene::castRayLight(SceneObject *object, Vector3 hit, int rec_ = 0)
         pixel = objColor * i_d + Color(1, 1, 1) * i_s;
     }
 
-    if (rec_ < MAX_RECURSION_DEPTH)
-    {
-        CastRayResult *rebound = castRay(Ray(hit, reflected));
-        if (rebound->object == nullptr)
-            return pixel + pixel * mat.getKa();
+    CastRayResult *rebound = castRay(Ray(hit, reflected));
+    if (rebound->object == nullptr)
+        return pixel + pixel * mat.getKa();
 
-        Color reboundColor =
-            castRayLight(rebound->object, rebound->hit, rec_ + 1);
-        pixel = pixel + reboundColor * reflectLoss * mat.getKs();
-    }
+    Color reboundColor = castRayLight(rebound->object, rebound->hit, rec_ + 1);
+    pixel += reboundColor * reflectLoss * mat.getKs();
 
     return pixel + pixel * mat.getKa();
 }
