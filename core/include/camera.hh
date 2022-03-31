@@ -14,8 +14,8 @@ public:
         : center_(center)
         , forward_(forward)
         , up_(up)
-        , height_(height)
         , width_(width)
+        , height_(height)
         , fovX_(fovX)
         , zMin_(0)
     {
@@ -42,9 +42,8 @@ public:
     float getZMin() const;
 
 private:
-    Vector3 center_;
-    Vector3 forward_, up_, right_;
-    float fovX_, fovY_, zMin_;
+    Vector3 center_, forward_, up_, right_;
+    float fovX_, zMin_, fovY_;
     int width_, height_;
 };
 

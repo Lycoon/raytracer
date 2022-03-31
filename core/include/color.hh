@@ -18,9 +18,9 @@ public:
         , b_(0)
     {}
 
-    const int getRed() const;
-    const int getGreen() const;
-    const int getBlue() const;
+    int getRed() const;
+    int getGreen() const;
+    int getBlue() const;
     void clamp();
 
     Color operator+(const float &l) const;

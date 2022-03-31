@@ -40,12 +40,12 @@ Vector3 reflect(Vector3 camToHit, Vector3 normal)
     return camToHit - normal * (camToHit.dot(normal)) * 2.0f;
 }
 
-float getDiffuse(Light *light, Vector3 hitToLight, Vector3 normal)
+float getDiffuse(Vector3 hitToLight, Vector3 normal)
 {
     return clamp(normal.dot(hitToLight), 0.0f, 1.0f);
 }
 
-float getSpecular(Light *light, Vector3 hitToLight, Vector3 reflected)
+float getSpecular(Vector3 hitToLight, Vector3 reflected)
 {
     return pow(reflected.dot(hitToLight), 41.0f) * 255;
 }
@@ -76,7 +76,7 @@ Color Scene::castRayLight(SceneObject *object, Vector3 hit, int rec_ = 0)
         return BLACK;
 
     TextureMaterial *texture = object->getTexture(ORIGIN);
-    Components mat = texture->getComponents(ORIGIN);
+    Material mat = texture->getMaterial(ORIGIN);
     Color objColor = texture->getColor(ORIGIN);
     Color pixel = BLACK;
 
@@ -103,10 +103,9 @@ Color Scene::castRayLight(SceneObject *object, Vector3 hit, int rec_ = 0)
         float luminance =
             light->getIntensity() * (1.0 / pow(lightDistance, 2)) * shadowRatio;
 
-        float i_d =
-            mat.getKd() * getDiffuse(light, hitToLight, normal) * luminance;
+        float i_d = mat.getKd() * getDiffuse(hitToLight, normal) * luminance;
         float i_s =
-            mat.getKs() * getSpecular(light, hitToLight, reflected) * luminance;
+            mat.getKs() * getSpecular(hitToLight, reflected) * luminance;
 
         pixel = objColor * i_d + Color(1, 1, 1) * i_s;
     }
@@ -132,8 +131,6 @@ Image Scene::render()
 
     float padX = cam_.getFovX() / w;
     float padY = cam_.getFovY() / h;
-    float fovXMax = cam_.getFovX() / 2;
-    float fovYMax = cam_.getFovY() / 2;
 
     Vector3 forward = cam_.getForward();
     Image image(w, h);

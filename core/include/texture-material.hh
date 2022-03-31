@@ -5,18 +5,18 @@
 #include "../../math/include/vector3.hh"
 #include "color.hh"
 
-class Components
+class Material
 {
 public:
-    Components(float kd, float ks, float ka)
+    Material(float kd, float ks, float ka)
         : kd_(kd)
         , ks_(ks)
         , ka_(ka)
     {}
 
-    const float getKd() const;
-    const float getKs() const;
-    const float getKa() const;
+    float getKd() const;
+    float getKs() const;
+    float getKa() const;
 
 private:
     float kd_, ks_, ka_;
@@ -25,15 +25,15 @@ private:
 class TextureMaterial
 {
 public:
-    TextureMaterial(Color color, Components components)
+    TextureMaterial(Color color, Material material)
         : color_(color)
-        , comps_(components)
+        , material_(material)
     {}
 
-    Components getComponents(Vector3 p) const;
+    Material getMaterial(Vector3 p) const;
     virtual Color getColor(Vector3 p) const = 0;
 
 protected:
     Color color_;
-    Components comps_;
+    Material material_;
 };

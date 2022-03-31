@@ -21,8 +21,8 @@ public:
     TextureMaterial *getTexture(Vector3 p);
 
 private:
-    Vector3 center_;
     float radius_;
+    Vector3 center_;
 };
 
 ostream &operator<<(ostream &out, Sphere &sphere);

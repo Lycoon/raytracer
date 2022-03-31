@@ -19,9 +19,9 @@ using namespace std;
 void loadDefaultScene(int width, int height, int fov, string outputName)
 {
     // Objects
-    auto matObj = Components(0.8f, 0.7f, 0.2f);
-    auto matPlane = Components(0.85f, 0.3f, 0.4f);
-    auto matBox = Components(0.8f, 0.1f, 0.4f);
+    auto matObj = Material(0.8f, 0.7f, 0.2f);
+    auto matPlane = Material(0.85f, 0.3f, 0.4f);
+    auto matBox = Material(0.8f, 0.1f, 0.4f);
 
     auto obj1_color = UniformTexture(Color(66, 135, 245), matObj);
     auto obj2_color = UniformTexture(Color(120, 180, 60), matObj);

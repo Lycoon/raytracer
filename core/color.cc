@@ -3,17 +3,17 @@
 #include <algorithm>
 #include <iostream>
 
-const int Color::getRed() const
+int Color::getRed() const
 {
     return r_;
 }
 
-const int Color::getGreen() const
+int Color::getGreen() const
 {
     return g_;
 }
 
-const int Color::getBlue() const
+int Color::getBlue() const
 {
     return b_;
 }

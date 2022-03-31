@@ -19,8 +19,8 @@ public:
         pixels_ = vector<vector<Color>>(height, line);
     }
 
-    const int getWidth() const;
-    const int getHeight() const;
+    int getWidth() const;
+    int getHeight() const;
     const vector<vector<Color>> &getPixels() const;
     void setPixel(int x, int y, Color color);
     void save(string name) const;

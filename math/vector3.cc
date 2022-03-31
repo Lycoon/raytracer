@@ -71,7 +71,9 @@ float Vector3::Z() const
     return z_;
 }
 
-// Float operations
+/**
+ * Float operations
+ */
 Vector3 Vector3::operator+(const float &l) const
 {
     return Vector3(x_ + l, y_ + l, z_ + l);
@@ -92,7 +94,45 @@ Vector3 Vector3::operator/(const float &l) const
     return Vector3(x_ / l, y_ / l, z_ / l);
 }
 
-// Vector3 operations
+Vector3 &Vector3::operator+=(const float &l)
+{
+    x_ += l;
+    y_ += l;
+    z_ += l;
+
+    return *this;
+}
+
+Vector3 &Vector3::operator-=(const float &l)
+{
+    x_ -= l;
+    y_ -= l;
+    z_ -= l;
+
+    return *this;
+}
+
+Vector3 &Vector3::operator*=(const float &l)
+{
+    x_ *= l;
+    y_ *= l;
+    z_ *= l;
+
+    return *this;
+}
+
+Vector3 &Vector3::operator/=(const float &l)
+{
+    x_ /= l;
+    y_ /= l;
+    z_ /= l;
+
+    return *this;
+}
+
+/**
+ * Vector3 operations
+ */
 Vector3 Vector3::operator+(const Vector3 &v) const
 {
     return Vector3(x_ + v.X(), y_ + v.Y(), z_ + v.Z());
@@ -145,42 +185,6 @@ Vector3 &Vector3::operator/=(const Vector3 &v)
     x_ /= v.X();
     y_ /= v.Y();
     z_ /= v.Z();
-
-    return *this;
-}
-
-Vector3 &Vector3::operator+=(const float &l)
-{
-    x_ += l;
-    y_ += l;
-    z_ += l;
-
-    return *this;
-}
-
-Vector3 &Vector3::operator-=(const float &l)
-{
-    x_ -= l;
-    y_ -= l;
-    z_ -= l;
-
-    return *this;
-}
-
-Vector3 &Vector3::operator*=(const float &l)
-{
-    x_ *= l;
-    y_ *= l;
-    z_ *= l;
-
-    return *this;
-}
-
-Vector3 &Vector3::operator/=(const float &l)
-{
-    x_ /= l;
-    y_ /= l;
-    z_ /= l;
 
     return *this;
 }

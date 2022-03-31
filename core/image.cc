@@ -2,12 +2,12 @@
 
 #include <iostream>
 
-const int Image::getWidth() const
+int Image::getWidth() const
 {
     return width_;
 }
 
-const int Image::getHeight() const
+int Image::getHeight() const
 {
     return height_;
 }

@@ -1,21 +1,21 @@
 #include "include/texture-material.hh"
 
-const float Components::getKd() const
+float Material::getKd() const
 {
     return kd_;
 }
 
-const float Components::getKs() const
+float Material::getKs() const
 {
     return ks_;
 }
 
-const float Components::getKa() const
+float Material::getKa() const
 {
     return ka_;
 }
 
-Components TextureMaterial::getComponents(Vector3 p) const
+Material TextureMaterial::getMaterial(Vector3 p) const
 {
-    return comps_;
+    return material_;
 }
