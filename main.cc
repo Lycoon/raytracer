@@ -23,6 +23,10 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     auto matPlane = Material(0.85f, 0.3f, 0.4f);
     auto matBox = Material(0.8f, 0.1f, 0.4f);
 
+    Color WHITE = Color(255, 255, 255);
+    Color GREEN = Color(0, 255, 0);
+    Color BLUE = Color(0, 0, 255);
+
     auto obj1_color = UniformTexture(Color(66, 135, 245), matObj);
     auto obj2_color = UniformTexture(Color(120, 180, 60), matObj);
     auto obj3_color = UniformTexture(Color(227, 15, 30), matObj);
@@ -38,17 +42,17 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     auto tri1 = Triangle(Vector3(2.0, -1, 3), Vector3(2.0, 2, 0),
                          Vector3(2.0, -1, -3), &obj1_color);
     // auto box1 = Box(Vector3(0, -0.5, -1), Vector3(-1, 0.5, 1), &box1_color);
-    auto sponge = Sponge(2, { 0, 0, 0 }, { 2, 2, 2 }, &box1_color);
+    auto sponge = Sponge(2, { -2, -2, -2 }, { 2, 2, 2 }, &box1_color);
 
     auto objects = vector<SceneObject *>{ &plane1, &obj1, &obj2,  &obj3,
                                           &obj4,   &tri1, &sponge };
 
     // Lights
-    auto pointLight = PointLight(Vector3(-2, 5, 3), 50.0f);
+    auto pointLight = PointLight(Vector3(-4, 3, 3), WHITE, 50.0f);
     auto lights = vector<Light *>{ &pointLight };
 
     // Camera
-    Vector3 cameraPos = Vector3(-2, 0, 0);
+    Vector3 cameraPos = Vector3(-5, 0, 0);
     Vector3 cameraDir = Vector3(1, 0, 0);
     Vector3 cameraUp = Vector3(0, 1, 0);
     auto camera = Camera(cameraPos, cameraDir, cameraUp, width, height, fov);

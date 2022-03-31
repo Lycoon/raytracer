@@ -40,12 +40,12 @@ Vector3 reflect(Vector3 camToHit, Vector3 normal)
     return camToHit - normal * (camToHit.dot(normal)) * 2.0f;
 }
 
-float getDiffuse(Vector3 hitToLight, Vector3 normal)
+float diffuse(Vector3 hitToLight, Vector3 normal)
 {
     return clamp(normal.dot(hitToLight), 0.0f, 1.0f);
 }
 
-float getSpecular(Vector3 hitToLight, Vector3 reflected)
+float specular(Vector3 hitToLight, Vector3 reflected)
 {
     return pow(reflected.dot(hitToLight), 41.0f) * 255;
 }
@@ -103,9 +103,8 @@ Color Scene::castRayLight(SceneObject *object, Vector3 hit, int rec_ = 0)
         float luminance =
             light->getIntensity() * (1.0 / pow(lightDistance, 2)) * shadowRatio;
 
-        float i_d = mat.getKd() * getDiffuse(hitToLight, normal) * luminance;
-        float i_s =
-            mat.getKs() * getSpecular(hitToLight, reflected) * luminance;
+        float i_d = mat.getKd() * diffuse(hitToLight, normal) * luminance;
+        float i_s = mat.getKs() * specular(hitToLight, reflected) * luminance;
 
         pixel = objColor * i_d + Color(1, 1, 1) * i_s;
     }

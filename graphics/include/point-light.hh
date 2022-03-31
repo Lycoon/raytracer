@@ -5,7 +5,7 @@
 class PointLight : public Light
 {
 public:
-    PointLight(Vector3 pos, float intensity)
-        : Light(pos, intensity)
+    PointLight(Vector3 pos, Color color, float intensity)
+        : Light(pos, color, intensity)
     {}
 };

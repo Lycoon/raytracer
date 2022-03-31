@@ -7,7 +7,7 @@ const Vector3 &Sphere::getCenter() const
     return center_;
 }
 
-const float Sphere::getRadius() const
+float Sphere::getRadius() const
 {
     return radius_;
 }

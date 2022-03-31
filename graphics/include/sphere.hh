@@ -14,7 +14,7 @@ public:
     {}
 
     const Vector3 &getCenter() const;
-    const float getRadius() const;
+    float getRadius() const;
 
     float doesIntersect(Ray ray);
     Vector3 getNormal(Vector3 p);
