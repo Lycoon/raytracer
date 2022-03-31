@@ -47,7 +47,8 @@ float diffuse(Vector3 hitToLight, Vector3 normal)
 
 float specular(Vector3 hitToLight, Vector3 reflected)
 {
-    return pow(reflected.dot(hitToLight), 41.0f) * 255;
+    float dot = reflected.dot(hitToLight);
+    return pow(dot <= 0 ? 0 : dot, 40.0f) * 255;
 }
 
 Scene::CastRayResult *Scene::castRay(Ray ray)
