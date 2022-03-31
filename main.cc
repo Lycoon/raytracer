@@ -2,6 +2,7 @@
 
 #include "core/include/image.hh"
 #include "core/include/scene.hh"
+#include "core/include/turtle.hh"
 #include "graphics/include/box.hh"
 #include "graphics/include/mengen-sponge.hh"
 #include "graphics/include/plane.hh"
@@ -15,6 +16,22 @@ using namespace std;
 #define DEFAULT_HEIGHT 512
 #define DEFAULT_FOV 90
 #define DEFAULT_OUTPUT_NAME "output"
+
+void doTurtle(Scene *scene, UniformTexture *texture)
+{
+    Turtle turtle;
+    turtle.rotateLeft(90); // orientating it upwards
+
+    for (int i = 0; i < 50; i++)
+    {
+        Sphere *sphere = new Sphere(0.2, turtle.getPosition(), texture);
+        scene->addObject(sphere);
+
+        cout << turtle.getHead() << endl;
+        turtle.moveForward(1);
+        turtle.rotateUp(20);
+    }
+}
 
 void loadDefaultScene(int width, int height, int fov, string outputName)
 {
@@ -59,9 +76,10 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     cout << camera << endl;
 
     // Creating scene
-    Scene scene(objects, lights, camera);
+    Scene *scene = new Scene(objects, lights, camera);
+    doTurtle(scene, &obj1_color);
 
-    Image image = scene.render();
+    Image image = scene->render();
     image.save(outputName);
 }
 

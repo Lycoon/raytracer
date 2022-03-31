@@ -17,22 +17,17 @@ const Camera Scene::getCamera() const
 
 void Scene::addObject(SceneObject *object)
 {
-    objs_.emplace_back(object);
+    objs_.push_back(object);
 }
 
 void Scene::addLight(Light *light)
 {
-    lights_.emplace_back(light);
+    lights_.push_back(light);
 }
 
 void Scene::setCamera(Camera camera)
 {
     cam_ = camera;
-}
-
-float degToRad(float angle)
-{
-    return angle * M_PI / 180;
 }
 
 Vector3 reflect(Vector3 camToHit, Vector3 normal)

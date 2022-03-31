@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "../../math/include/utils.hh"
 #include "camera.hh"
 #include "image.hh"
 #include "light.hh"
