@@ -20,16 +20,15 @@ using namespace std;
 void doTurtle(Scene *scene, UniformTexture *texture)
 {
     Turtle turtle;
-    turtle.rotateLeft(90); // orientating it upwards
+    turtle.rotateLeft(90);
 
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 150; i++)
     {
         Sphere *sphere = new Sphere(0.2, turtle.getPosition(), texture);
         scene->addObject(sphere);
-
-        cout << turtle.getHead() << endl;
-        turtle.moveForward(1);
-        turtle.rotateUp(20);
+        
+        turtle.rotateUp(90);
+        turtle.moveForward(i * 0.15);
     }
 }
 
@@ -62,7 +61,7 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     auto sponge = Sponge(2, { -2, -2, -2 }, { 2, 2, 2 }, &box1_color);
 
     auto objects =
-        vector<SceneObject *>{ &plane1, &obj1, &obj2, &obj3, &obj4, &tri1 };
+        vector<SceneObject *>{ &plane1, &tri1 };
 
     // Lights
     auto pointLight = PointLight(Vector3(-3, 6, 3), WHITE, 50.0f);
@@ -78,6 +77,14 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     // Creating scene
     Scene *scene = new Scene(objects, lights, camera);
     doTurtle(scene, &obj1_color);
+
+    /*
+    for (auto obj : scene->getObjects())
+    {
+        if (obj->getId().compare("sphere") == 0)
+            cout << *(Sphere*)obj << endl;
+    }
+    */
 
     Image image = scene->render();
     image.save(outputName);

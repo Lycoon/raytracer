@@ -78,6 +78,7 @@ ostream &operator<<(ostream &out, Camera &cam)
     Vector3 center = cam.getCenter();
     Vector3 forward = cam.getForward();
     Vector3 up = cam.getUp();
+    Vector3 right = cam.getRight();
     float fovX = cam.getFovX();
     float fovY = cam.getFovY();
     float zMin = cam.getZMin();
@@ -86,6 +87,7 @@ ostream &operator<<(ostream &out, Camera &cam)
                << "  center = " << center << ",\n"
                << "  direction = " << forward << ", \n"
                << "  up = " << up << ", \n"
+               << "  right = " << right << ", \n"
                << "  fovX = " << fovX << ", \n"
                << "  fovY = " << fovY << ", \n"
                << "  zMin = " << zMin << endl

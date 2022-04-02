@@ -2,5 +2,5 @@
 
 float degToRad(float angle)
 {
-    return angle * M_PI / 180;
+    return angle * M_PI / 180.0;
 }

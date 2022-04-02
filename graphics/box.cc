@@ -81,24 +81,19 @@ float sign(float value)
 Vector3 Box::getNormal(Vector3 p)
 {
     float eps = 0.0001f;
-    bool diffX_pMin = fabs(p.X() - p_min_.X()) <= eps;
-    bool diffY_pMin = fabs(p.Y() - p_min_.Y()) <= eps;
-    bool diffZ_pMin = fabs(p.Z() - p_min_.Z()) <= eps;
-
-    bool diffX_pMax = fabs(p.X() - p_max_.X()) <= eps;
-    bool diffY_pMax = fabs(p.Y() - p_max_.Y()) <= eps;
-    bool diffZ_pMax = fabs(p.Z() - p_max_.Z()) <= eps;
-
-    if (diffX_pMin)
+    
+    if (fabs(p.X() - p_min_.X()) <= eps)
         return Vector3(p_min_.X() > p_max_.X() ? 1 : -1, 0, 0);
-    else if (diffY_pMin)
+    else if (fabs(p.Y() - p_min_.Y()) <= eps)
         return Vector3(0, p_min_.Y() > p_max_.Y() ? 1 : -1, 0);
-    else if (diffZ_pMin)
+    else if (fabs(p.Z() - p_min_.Z()) <= eps)
         return Vector3(0, 0, p_min_.Z() > p_max_.Z() ? 1 : -1);
-    else if (diffX_pMax)
+    else if (fabs(p.X() - p_max_.X()) <= eps)
         return Vector3(p_min_.X() > p_max_.X() ? -1 : 1, 0, 0);
-    else if (diffY_pMax)
+    else if (fabs(p.Y() - p_max_.Y()) <= eps)
         return Vector3(0, p_min_.Y() > p_max_.Y() ? -1 : 1, 0);
+
+    // fabs(p.Z() - p_max_.Z()) <= eps
     return Vector3(0, 0, p_min_.Z() > p_max_.Z() ? -1 : 1);
 }
 

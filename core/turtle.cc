@@ -1,12 +1,14 @@
 #include "include/turtle.hh"
 
-void Turtle::rotateHead(float angle)
+void Turtle::rotateUp(float angle)
 {
     float a = degToRad(angle);
-    left_ = left_ * cos(a) + up_ * sin(a);
-    up_ = left_ * -sin(a) + up_ * cos(a);
+    Vector3 head = head_ * cos(a) + left_ * -sin(a);
+    Vector3 left = head_ * sin(a) + left_ * cos(a);
 
-    up_.normalize();
+    head_ = head;
+    left_ = left;
+
     head_.normalize();
     left_.normalize();
 }
@@ -14,24 +16,27 @@ void Turtle::rotateHead(float angle)
 void Turtle::rotateLeft(float angle)
 {
     float a = degToRad(angle);
-    head_ = head_ * cos(a) + up_ * sin(a);
-    up_ = head_ * -sin(a) + up_ * cos(a);
+    Vector3 head = head_ = head_ * cos(a) + up_ * sin(a);
+    Vector3 up = up_ = head_ * -sin(a) + up_ * cos(a);
 
-    up_.normalize();
+    head_ = head;
+    up_ = up;
+
     head_.normalize();
-    left_.normalize();
+    up_.normalize();
 }
 
-void Turtle::rotateUp(float angle)
+void Turtle::rotateHead(float angle)
 {
     float a = degToRad(angle);
-    cout << "a: " << a << endl;
-    head_ = head_ * cos(a) + left_ * -sin(a);
-    left_ = head_ * sin(a) + left_ * cos(a);
+    Vector3 left = left_ = left_ * cos(a) + up_ * sin(a);
+    Vector3 up = up_ = left_ * -sin(a) + up_ * cos(a);
 
-    up_.normalize();
-    head_.normalize();
+    left_ = left;
+    up_ = up;
+
     left_.normalize();
+    up_.normalize();
 }
 
 void Turtle::moveForward(float distance)

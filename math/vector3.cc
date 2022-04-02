@@ -124,8 +124,13 @@ Vector3 &Vector3::operator*=(const float &l)
 Vector3 &Vector3::operator/=(const float &l)
 {
     x_ /= l;
+    // x_ = x_ <= 0.0000001 && x_ >= -0.0000001 ? 0 : x_;
+
     y_ /= l;
+    // y_ = y_ <= 0.0000001 && y_ >= -0.0000001 ? 0 : y_;
+
     z_ /= l;
+    // z_ = z_ <= 0.0000001 && z_ >= -0.0000001 ? 0 : z_;
 
     return *this;
 }
