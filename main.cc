@@ -26,7 +26,7 @@ void doTurtle(Scene *scene, UniformTexture *texture)
     {
         Sphere *sphere = new Sphere(0.2, turtle.getPosition(), texture);
         scene->addObject(sphere);
-        
+
         turtle.rotateUp(90);
         turtle.moveForward(i * 0.15);
     }
@@ -58,25 +58,28 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     auto tri1 = Triangle(Vector3(2.0, -1, 3), Vector3(2.0, 2, 0),
                          Vector3(2.0, -1, -3), &obj1_color);
     // auto box1 = Box(Vector3(0, -0.5, -1), Vector3(-1, 0.5, 1), &box1_color);
-    auto sponge = Sponge(2, { -2, -2, -2 }, { 2, 2, 2 }, &box1_color);
+    auto sponge = Sponge(2, {-2, -2, -2}, {2, 2, 2}, &box1_color);
 
     auto objects =
-        vector<SceneObject *>{ &plane1, &tri1 };
+        vector<SceneObject *>{&plane1, &tri1};
 
     // Lights
-    auto pointLight = PointLight(Vector3(-3, 6, 3), WHITE, 50.0f);
-    auto lights = vector<Light *>{ &pointLight };
+    auto pointLight = PointLight(Vector3(10, 6, 3), WHITE, 50.0f);
+    auto lights = vector<Light *>{&pointLight};
 
     // Camera
-    Vector3 cameraPos = Vector3(-5, 0, 0);
-    Vector3 cameraDir = Vector3(1, 0, 0);
-    Vector3 cameraUp = Vector3(0, 1, 0);
+    Vector3 cameraPos = Vector3(10, 15, 0);
+    Vector3 cameraDir = Vector3(0, -1, 0);
+    Vector3 cameraUp = Vector3(-1, 0, 0);
     auto camera = Camera(cameraPos, cameraDir, cameraUp, width, height, fov);
     cout << camera << endl;
 
     // Creating scene
     Scene *scene = new Scene(objects, lights, camera);
-    doTurtle(scene, &obj1_color);
+
+    // Turtle
+    Turtle turtle;
+    turtle.execute(scene, "grammar.json");
 
     /*
     for (auto obj : scene->getObjects())
