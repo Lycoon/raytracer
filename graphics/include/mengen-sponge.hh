@@ -5,7 +5,7 @@
 #include "../../core/include/scene-object.hh"
 #include "./box.hh"
 
-void recursion(vector<Box> &boxes, unsigned int rec, Vector3 &p_min,
+void recursion(vector<Box> &boxes, unsigned int rec, Vector3 p_min,
                Vector3 p_max, UniformTexture *texture);
 
 class Sponge : public SceneObject
@@ -17,16 +17,13 @@ public:
     {
         boxes_ = {};
         recursion(boxes_, rec, p_min, p_max, texture);
-        std::cout << boxes_.size() << endl;
     }
 
     float doesIntersect(Ray ray);
-    Vector3 getNormal(Vector3 p);
+    Vector3 &getNormal(Vector3 p);
     TextureMaterial *getTexture(Vector3 p);
 
 private:
     Box *latest_hit_ = nullptr;
     vector<Box> boxes_;
 };
-
-ostream &operator<<(ostream &out, Sponge &sponge);

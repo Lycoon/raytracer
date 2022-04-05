@@ -11,12 +11,12 @@ class SceneObject
 {
 public:
     SceneObject(TextureMaterial *texture, string id)
-        : texture_(texture)
-        , id_(id)
-    {}
+        : texture_(texture), id_(id)
+    {
+    }
 
     virtual float doesIntersect(Ray ray) = 0;
-    virtual Vector3 getNormal(Vector3 p) = 0;
+    virtual Vector3 &getNormal(Vector3 p) = 0;
     virtual TextureMaterial *getTexture(Vector3 p) = 0;
 
     string getId()

@@ -11,11 +11,14 @@ string Grammar::parse(string filename)
     steps_ = grammar["steps"];
     expanded_ = grammar["axiom"];
 
-    map<char, string> rules;
-    for (auto rule : grammar["rules"]) // map each rule to its expansion
+    map<char, vector<string>> rules;
+    for (auto& [key, val] : grammar["rules"].items()) // map each rule to its expansion
     {
-        string init = rule["init"];
-        rules[init[0]] = rule["rule"];
+        char init = key[0];
+        if (rules.find(init) == rules.end())
+            rules[init] = vector<string>();
+
+        rules[init].push_back(val);
     }
 
     for (int step = 0; step < steps_; step++)
@@ -27,7 +30,8 @@ string Grammar::parse(string filename)
             auto found = rules.find(c);
             if (found != rules.end())
             {
-                expanded.append((*found).second);
+                vector<string> opts = (*found).second;
+                expanded.append(opts[rand() % opts.size()]);
                 continue;
             }
 
@@ -36,7 +40,7 @@ string Grammar::parse(string filename)
         }
         expanded_ = expanded;
     }
-
+    
     return expanded_;
 }
 

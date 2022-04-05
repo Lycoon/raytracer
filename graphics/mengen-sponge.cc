@@ -26,7 +26,7 @@ float Sponge::doesIntersect(Ray ray)
     return min == INFINITY ? -1 : min;
 }
 
-Vector3 Sponge::getNormal(Vector3 p)
+Vector3 &Sponge::getNormal(Vector3 p)
 {
     return latest_hit_->getNormal(p);
 }
@@ -36,18 +36,12 @@ TextureMaterial *Sponge::getTexture(Vector3 p)
     return texture_;
 }
 
-ostream &operator<<(ostream &out, Sponge &sphere)
-{
-    out << "Sponge(" << endl << ")";
-    return out;
-}
-
-void recursion(vector<Box> &boxes, unsigned int rec, Vector3 &p_min,
+void recursion(vector<Box> &boxes, unsigned int rec, Vector3 p_min,
                Vector3 p_max, UniformTexture *texture)
 {
     if (rec <= 0)
     {
-        Box b = { p_min, p_max, texture };
+        Box b = Box(&p_min, &p_max, texture);
         boxes.push_back(b);
         return;
     }
@@ -57,7 +51,7 @@ void recursion(vector<Box> &boxes, unsigned int rec, Vector3 &p_min,
     float step_y = diff.Y() / 3.0;
     float step_z = diff.Z() / 3.0;
 
-    Vector3 step_one = { step_x, step_y, step_z };
+    Vector3 step_one = {step_x, step_y, step_z};
 
     for (size_t i = 0; i < 3; i++)
     {
@@ -65,14 +59,13 @@ void recursion(vector<Box> &boxes, unsigned int rec, Vector3 &p_min,
         {
             for (size_t k = 0; k < 3; k++)
             {
-                if ((i == 1 && j == 1)
-                    || (j == 1 && k == 1) | (k == 1 && i == 1))
+                if ((i == 1 && j == 1) || (j == 1 && k == 1) | (k == 1 && i == 1))
                 {
                     continue;
                 }
 
                 Vector3 p1 = p_min;
-                p1 += { i * step_x, j * step_y, k * step_z };
+                p1 += {i * step_x, j * step_y, k * step_z};
 
                 recursion(boxes, rec - 1, p1, p1 + step_one, texture);
             }

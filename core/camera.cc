@@ -3,24 +3,24 @@
 #include <iostream>
 
 // Getters
-Vector3 Camera::getCenter() const
+Vector3 &Camera::getCenter() const
 {
-    return center_;
+    return *center_;
 }
 
-Vector3 Camera::getForward() const
+Vector3 &Camera::getForward() const
 {
-    return forward_;
+    return *forward_;
 }
 
-Vector3 Camera::getUp() const
+Vector3 &Camera::getUp() const
 {
-    return up_;
+    return *up_;
 }
 
-Vector3 Camera::getRight() const
+Vector3 &Camera::getRight() const
 {
-    return right_;
+    return *right_;
 }
 
 int Camera::getWidth() const

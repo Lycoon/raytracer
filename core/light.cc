@@ -2,12 +2,12 @@
 
 const Vector3 &Light::getPosition() const
 {
-    return pos_;
+    return *pos_;
 }
 
 const Color &Light::getColor() const
 {
-    return color_;
+    return *color_;
 }
 
 float Light::getIntensity() const

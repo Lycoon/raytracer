@@ -8,12 +8,12 @@ class Ray
 {
 public:
     Ray(Vector3 rayOrigin, Vector3 rayDirection)
-        : rayOrigin_(rayOrigin)
-        , rayDirection_(rayDirection)
-    {}
+        : rayOrigin_(rayOrigin), rayDirection_(rayDirection)
+    {
+    }
 
-    const Vector3 &getOrigin() const;
-    const Vector3 &getDirection() const;
+    Vector3 &getOrigin();
+    Vector3 &getDirection();
 
 private:
     Vector3 rayOrigin_;

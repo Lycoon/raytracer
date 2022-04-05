@@ -4,19 +4,19 @@
 
 #include "include/uniform-texture.hh"
 
-const Vector3 &Box::getCenter() const
+Vector3 &Box::getCenter() const
 {
-    return center_;
+    return *center_;
 }
 
-const Vector3 &Box::getPMin() const
+Vector3 &Box::getPMin() const
 {
-    return p_min_;
+    return *p_min_;
 }
 
-const Vector3 &Box::getPMax() const
+Vector3 &Box::getPMax() const
 {
-    return p_max_;
+    return *p_max_;
 }
 
 /**
@@ -34,14 +34,14 @@ float Box::doesIntersect(Ray ray)
     float rDir_y = ray.getDirection().Y();
     float rDir_z = ray.getDirection().Z();
 
-    float tmin = (p_min_.X() - rO_x) / rDir_x;
-    float tmax = (p_max_.X() - rO_x) / rDir_x;
+    float tmin = (p_min_->X() - rO_x) / rDir_x;
+    float tmax = (p_max_->X() - rO_x) / rDir_x;
 
     if (tmin > tmax)
         swap(tmin, tmax);
 
-    float tymin = (p_min_.Y() - rO_y) / rDir_y;
-    float tymax = (p_max_.Y() - rO_y) / rDir_y;
+    float tymin = (p_min_->Y() - rO_y) / rDir_y;
+    float tymax = (p_max_->Y() - rO_y) / rDir_y;
 
     if (tymin > tymax)
         swap(tymin, tymax);
@@ -55,8 +55,8 @@ float Box::doesIntersect(Ray ray)
     if (tymax < tmax)
         tmax = tymax;
 
-    float tzmin = (p_min_.Z() - rO_z) / rDir_z;
-    float tzmax = (p_max_.Z() - rO_z) / rDir_z;
+    float tzmin = (p_min_->Z() - rO_z) / rDir_z;
+    float tzmax = (p_max_->Z() - rO_z) / rDir_z;
 
     if (tzmin > tzmax)
         swap(tzmin, tzmax);
@@ -78,23 +78,25 @@ float sign(float value)
     return value < 0 ? -1 : 1;
 }
 
-Vector3 Box::getNormal(Vector3 p)
+Vector3 &Box::getNormal(Vector3 p)
 {
     float eps = 0.0001f;
-    
-    if (fabs(p.X() - p_min_.X()) <= eps)
-        return Vector3(p_min_.X() > p_max_.X() ? 1 : -1, 0, 0);
-    else if (fabs(p.Y() - p_min_.Y()) <= eps)
-        return Vector3(0, p_min_.Y() > p_max_.Y() ? 1 : -1, 0);
-    else if (fabs(p.Z() - p_min_.Z()) <= eps)
-        return Vector3(0, 0, p_min_.Z() > p_max_.Z() ? 1 : -1);
-    else if (fabs(p.X() - p_max_.X()) <= eps)
-        return Vector3(p_min_.X() > p_max_.X() ? -1 : 1, 0, 0);
-    else if (fabs(p.Y() - p_max_.Y()) <= eps)
-        return Vector3(0, p_min_.Y() > p_max_.Y() ? -1 : 1, 0);
+    Vector3 normal;
 
-    // fabs(p.Z() - p_max_.Z()) <= eps
-    return Vector3(0, 0, p_min_.Z() > p_max_.Z() ? -1 : 1);
+    if (fabs(p.X() - p_min_->X()) <= eps)
+        normal = Vector3(p_min_->X() > p_max_->X() ? 1 : -1, 0, 0);
+    else if (fabs(p.Y() - p_min_->Y()) <= eps)
+        normal = Vector3(0, p_min_->Y() > p_max_->Y() ? 1 : -1, 0);
+    else if (fabs(p.Z() - p_min_->Z()) <= eps)
+        normal = Vector3(0, 0, p_min_->Z() > p_max_->Z() ? 1 : -1);
+    else if (fabs(p.X() - p_max_->X()) <= eps)
+        normal = Vector3(p_min_->X() > p_max_->X() ? -1 : 1, 0, 0);
+    else if (fabs(p.Y() - p_max_->Y()) <= eps)
+        normal = Vector3(0, p_min_->Y() > p_max_->Y() ? -1 : 1, 0);
+    else if (fabs(p.Z() - p_max_->Z()) <= eps)
+        normal = Vector3(0, 0, p_min_->Z() > p_max_->Z() ? -1 : 1);
+
+    return normal;
 }
 
 TextureMaterial *Box::getTexture(Vector3 p)

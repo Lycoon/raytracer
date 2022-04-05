@@ -6,15 +6,15 @@ void Turtle::execute(Scene *scene, string filename)
     string parsed = grammar.parse(filename);
     float angle = grammar.getAngle();
 
-    auto sphereMat = Material(0.8f, 0.7f, 0.2f);
-    auto sphereColor = new UniformTexture(Color(0, 255, 0), sphereMat);
+    auto sphereMat = new Material(0.8f, 0.7f, 0.2f);
+    auto sphereColor = new UniformTexture(new Color(0, 255, 0), sphereMat);
 
     for (char c : parsed)
     {
         if (c == 'F')
         {
             moveForward(0.4);
-            Sphere *sphere = new Sphere(0.2, position_, sphereColor);
+            Sphere *sphere = new Sphere(0.2, new Vector3(position_), sphereColor);
             scene->addObject(sphere);
         }
         else if (c == '+')
@@ -40,7 +40,7 @@ void Turtle::execute(Scene *scene, string filename)
 
 void Turtle::setState()
 {
-    TurtleState state = {
+    TurtleState *state = new TurtleState{
         position_,
         head_,
         left_,
@@ -52,10 +52,11 @@ void Turtle::setState()
 void Turtle::useState()
 {
     auto last = states_.back();
-    position_ = last.position_;
-    head_ = last.head_;
-    left_ = last.left_;
-    up_ = last.up_;
+
+    position_ = last->position_;
+    head_ = last->head_;
+    left_ = last->left_;
+    up_ = last->up_;
 
     states_.pop_back();
 }
@@ -76,8 +77,8 @@ void Turtle::rotateUp(float angle)
 void Turtle::rotateLeft(float angle)
 {
     float a = degToRad(angle);
-    Vector3 head = head_ = head_ * cos(a) + up_ * sin(a);
-    Vector3 up = up_ = head_ * -sin(a) + up_ * cos(a);
+    Vector3 head = head_ * cos(a) + up_ * sin(a);
+    Vector3 up = head_ * -sin(a) + up_ * cos(a);
 
     head_ = head;
     up_ = up;
@@ -89,8 +90,8 @@ void Turtle::rotateLeft(float angle)
 void Turtle::rotateHead(float angle)
 {
     float a = degToRad(angle);
-    Vector3 left = left_ = left_ * cos(a) + up_ * sin(a);
-    Vector3 up = up_ = left_ * -sin(a) + up_ * cos(a);
+    Vector3 left = left_ * cos(a) + up_ * sin(a);
+    Vector3 up = left_ * -sin(a) + up_ * cos(a);
 
     left_ = left;
     up_ = up;

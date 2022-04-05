@@ -17,5 +17,5 @@ float Material::getKa() const
 
 Material TextureMaterial::getMaterial(Vector3 p) const
 {
-    return material_;
+    return *material_;
 }

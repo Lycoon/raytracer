@@ -9,13 +9,13 @@ void Vector3::abs()
     z_ = fabs(z_);
 }
 
-Vector3 Vector3::cross(const Vector3 &v) const
+Vector3 *Vector3::cross(const Vector3 &v) const
 {
     float crossX = y_ * v.Z() - z_ * v.Y();
     float crossY = z_ * v.X() - x_ * v.Z();
     float crossZ = x_ * v.Y() - y_ * v.X();
 
-    return Vector3(crossX, crossY, crossZ);
+    return new Vector3(crossX, crossY, crossZ);
 }
 
 float Vector3::dot(const Vector3 &v) const
@@ -43,7 +43,7 @@ Vector3 Vector3::rotate(Vector3 axis, float angle)
     axis.normalize();
 
     Vector3 a = *this * cos(rad);
-    Vector3 b = (axis.cross(*this) * sin(rad));
+    Vector3 b = (*axis.cross(*this) * sin(rad));
     Vector3 c = axis * (axis.dot(*this)) * (1.0 - cos(rad));
 
     return a + b + c;
@@ -74,27 +74,27 @@ float Vector3::Z() const
 /**
  * Float operations
  */
-Vector3 Vector3::operator+(const float &l) const
+Vector3 Vector3::operator+(const float l)
 {
     return Vector3(x_ + l, y_ + l, z_ + l);
 }
 
-Vector3 Vector3::operator-(const float &l) const
+Vector3 Vector3::operator-(const float l)
 {
     return Vector3(x_ - l, y_ - l, z_ - l);
 }
 
-Vector3 Vector3::operator*(const float &l) const
+Vector3 Vector3::operator*(const float l)
 {
     return Vector3(x_ * l, y_ * l, z_ * l);
 }
 
-Vector3 Vector3::operator/(const float &l) const
+Vector3 Vector3::operator/(const float l)
 {
     return Vector3(x_ / l, y_ / l, z_ / l);
 }
 
-Vector3 &Vector3::operator+=(const float &l)
+Vector3 &Vector3::operator+=(const float l)
 {
     x_ += l;
     y_ += l;
@@ -103,7 +103,7 @@ Vector3 &Vector3::operator+=(const float &l)
     return *this;
 }
 
-Vector3 &Vector3::operator-=(const float &l)
+Vector3 &Vector3::operator-=(const float l)
 {
     x_ -= l;
     y_ -= l;
@@ -112,7 +112,7 @@ Vector3 &Vector3::operator-=(const float &l)
     return *this;
 }
 
-Vector3 &Vector3::operator*=(const float &l)
+Vector3 &Vector3::operator*=(const float l)
 {
     x_ *= l;
     y_ *= l;
@@ -121,16 +121,11 @@ Vector3 &Vector3::operator*=(const float &l)
     return *this;
 }
 
-Vector3 &Vector3::operator/=(const float &l)
+Vector3 &Vector3::operator/=(const float l)
 {
     x_ /= l;
-    // x_ = x_ <= 0.0000001 && x_ >= -0.0000001 ? 0 : x_;
-
     y_ /= l;
-    // y_ = y_ <= 0.0000001 && y_ >= -0.0000001 ? 0 : y_;
-
     z_ /= l;
-    // z_ = z_ <= 0.0000001 && z_ >= -0.0000001 ? 0 : z_;
 
     return *this;
 }

@@ -4,23 +4,28 @@
 #include <vector>
 
 #include "../../math/include/utils.hh"
+#include "../../graphics/include/point-light.hh"
+#include "../../graphics/include/sphere.hh"
+#include "../../graphics/include/plane.hh"
+#include "../../graphics/include/triangle.hh"
+
 #include "camera.hh"
 #include "image.hh"
 #include "light.hh"
+#include "uniform-texture.hh"
+#include "texture-material.hh"
 #include "scene-object.hh"
 
 class Scene
 {
 public:
-    Scene(vector<SceneObject *> objects, vector<Light *> lights, Camera camera)
-        : objs_(objects)
-        , lights_(lights)
-        , cam_(camera)
-    {}
+    Scene(string configFile)
+    {
+        parse(configFile);
+    }
 
-    const Color BLACK = Color(0, 0, 0);
-    const Vector3 ORIGIN = Vector3(0, 0, 0);
-    const int MAX_RECURSION_DEPTH = 2;
+    Color *BLACK = new Color(0, 0, 0);
+    Vector3 *ORIGIN = new Vector3(0, 0, 0);
 
     struct CastRayResult
     {
@@ -28,19 +33,25 @@ public:
         Vector3 hit;
     };
 
-    const vector<SceneObject *> getObjects() const;
-    const vector<Light *> getLights() const;
-    const Camera getCamera() const;
-    CastRayResult *castRay(Ray ray);
-    Color castRayLight(SceneObject *object, Vector3 hit, int rec_);
+    void parse(string configFile);
     Image render();
 
+    Camera &getCamera() const;
+    void setCamera(Camera *camera);
+
+    CastRayResult *castRay(Ray ray);
+    Color castRayLight(SceneObject *object, Vector3 hit, int rec_);
+
+    const vector<SceneObject *> getObjects() const;
+    const vector<Light *> getLights() const;
     void addObject(SceneObject *object);
     void addLight(Light *light);
-    void setCamera(Camera camera);
 
 private:
     vector<SceneObject *> objs_;
     vector<Light *> lights_;
-    Camera cam_;
+    Camera *cam_;
+
+    bool hasLightLoss_ = true;
+    int reflections_ = 1;
 };

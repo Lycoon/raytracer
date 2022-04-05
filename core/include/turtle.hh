@@ -43,5 +43,5 @@ public:
 private:
     Vector3 position_;
     Vector3 head_, left_, up_;
-    vector<TurtleState> states_;
+    vector<TurtleState *> states_;
 };

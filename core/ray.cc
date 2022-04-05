@@ -1,11 +1,11 @@
 #include "include/ray.hh"
 
-const Vector3 &Ray::getOrigin() const
+Vector3 &Ray::getOrigin()
 {
     return rayOrigin_;
 }
 
-const Vector3 &Ray::getDirection() const
+Vector3 &Ray::getDirection()
 {
     return rayDirection_;
 }
