@@ -6,16 +6,21 @@ void Turtle::execute(Scene *scene, string filename)
     string parsed = grammar.parse(filename);
     float angle = grammar.getAngle();
 
-    auto sphereMat = new Material(0.8f, 0.7f, 0.2f);
-    auto sphereColor = new UniformTexture(new Color(0, 255, 0), sphereMat);
+    auto material = new Material(0.8f, 0.7f, 0.2f);
+    auto texture = new UniformTexture(new Color(0, 255, 0), material);
 
     for (char c : parsed)
     {
         if (c == 'F')
         {
             moveForward(0.4);
-            Sphere *sphere = new Sphere(0.2, new Vector3(position_), sphereColor);
+            Sphere *sphere = new Sphere(0.15, new Vector3(position_), texture);
             scene->addObject(sphere);
+        }
+        else if (c == 'f')
+        {
+            polygon_.push_back(position_);
+            moveForward(0.4);
         }
         else if (c == '+')
             rotateUp(angle); // left
@@ -31,10 +36,26 @@ void Turtle::execute(Scene *scene, string filename)
             rotateHead(-angle); // pitch left
         else if (c == '|')
             rotateUp(180); // U-turn
+        else if (c == '{')
+            polygon_.clear();
+        else if (c == '}')
+            drawPolygon(scene, texture);
         else if (c == '[')
             setState();
         else if (c == ']')
             useState();
+    }
+}
+
+void Turtle::drawPolygon(Scene *scene, UniformTexture *texture)
+{
+    for (int i = 0; i < polygon_.size(); i += 3)
+    {
+        Vector3 *v0 = new Vector3(polygon_[i].X(), polygon_[i].Y(), polygon_[i].Z());
+        Vector3 *v1 = new Vector3(polygon_[i + 1].X(), polygon_[i + 1].Y(), polygon_[i + 1].Z());
+        Vector3 *v2 = new Vector3(polygon_[i + 2].X(), polygon_[i + 2].Y(), polygon_[i + 2].Z());
+
+        scene->addObject(new Triangle(v0, v1, v2, texture));
     }
 }
 

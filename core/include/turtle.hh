@@ -30,6 +30,7 @@ public:
     void rotateLeft(float angle);
     void rotateUp(float angle);
     void moveForward(float distance);
+    void drawPolygon(Scene *scene, UniformTexture *texture);
     void execute(Scene *scene, string filename);
 
     void setState();
@@ -44,4 +45,5 @@ private:
     Vector3 position_;
     Vector3 head_, left_, up_;
     vector<TurtleState *> states_;
+    vector<Vector3> polygon_;
 };

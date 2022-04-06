@@ -242,7 +242,8 @@ Image Scene::render()
     Vector3 forward = cam_->getForward();
     Image image(w, h);
 
-    cout << endl << "Rendering" << HIDE_CURSOR << endl;
+    cout << endl
+         << "Rendering" << HIDE_CURSOR << endl;
     for (float y = 0.0; y < h; y++)
     {
         Vector3 tmp = forward.rotate(cam_->getRight(), (y - h / 2) * padY);
@@ -271,10 +272,11 @@ Image Scene::render()
                 image.setPixel(x, y, *BLACK);
             }
 
-            // updateProgress(++step, size);
+            updateProgress(++step, size);
         }
     }
 
-    cout << endl << "Completed." << SHOW_CURSOR << endl;
+    cout << endl
+         << "Completed." << SHOW_CURSOR << endl;
     return image;
 }

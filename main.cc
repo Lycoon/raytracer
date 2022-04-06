@@ -11,19 +11,6 @@ using namespace std;
 #define DEFAULT_FOV 90
 #define DEFAULT_OUTPUT_NAME "output"
 
-void loadDefaultScene(int width, int height, int fov, string outputName)
-{
-    // Creating scene
-    Scene *scene = new Scene("config.json");
-
-    // Turtle
-    // Turtle turtle;
-    // turtle.execute(scene, "grammars/little_plant.json");
-
-    Image image = scene->render();
-    image.save(outputName);
-}
-
 int main(int argc, char const *argv[])
 {
     cout << "\n[----------------- Raytracer -----------------]\n";
@@ -35,7 +22,13 @@ int main(int argc, char const *argv[])
     int fov = argc >= 4 ? atoi(argv[3]) : DEFAULT_FOV;
     string outputName = argc >= 5 ? argv[4] : DEFAULT_OUTPUT_NAME;
 
-    loadDefaultScene(width, height, fov, outputName);
+    // Creating scene
+    Scene *scene = new Scene("config.json");
+    Turtle turtle;
+    turtle.execute(scene, "grammars/cool_plant.json");
+
+    Image image = scene->render();
+    image.save(outputName);
 
     return 0;
 }
