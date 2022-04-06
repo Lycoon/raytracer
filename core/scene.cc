@@ -98,6 +98,7 @@ Color Scene::castRayLight(SceneObject *object, Vector3 hit, int rec_ = 0)
             lightLoss = 1.0 / pow(hitToLight.magnitude(), 2);
 
         hitToLight.normalize();
+
         Ray lightRay(hit, hitToLight);
         CastRayResult *res = castRay(lightRay);
         if (res->object != nullptr)
