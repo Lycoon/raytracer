@@ -78,7 +78,7 @@ float sign(float value)
     return value < 0 ? -1 : 1;
 }
 
-Vector3 &Box::getNormal(Vector3 p)
+Vector3 Box::getNormal(Vector3 p)
 {
     float eps = 0.0001f;
     Vector3 normal;

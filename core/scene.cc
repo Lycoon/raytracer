@@ -1,4 +1,5 @@
 #include "include/scene.hh"
+
 #include "include/json.hpp"
 
 const char *HIDE_CURSOR = "\e[?25l";
@@ -91,12 +92,12 @@ Color Scene::castRayLight(SceneObject *object, Vector3 hit, int rec_ = 0)
     for (auto light : lights_)
     {
         Vector3 hitToLight = light->getPosition() - hit;
-        hitToLight.normalize();
 
         float lightLoss = 0.015;
         if (hasLightLoss_)
             lightLoss = 1.0 / pow(hitToLight.magnitude(), 2);
 
+        hitToLight.normalize();
         Ray lightRay(hit, hitToLight);
         CastRayResult *res = castRay(lightRay);
         if (res->object != nullptr)
@@ -135,7 +136,8 @@ void Scene::parse(string configFile)
     map<string, Material *> materials;
     for (auto &[key, val] : mats_.items())
     {
-        auto mat = new Material(val["diffuse"], val["specular"], val["ambient"]);
+        auto mat =
+            new Material(val["diffuse"], val["specular"], val["ambient"]);
         materials[val["name"]] = mat;
     }
 
@@ -160,33 +162,33 @@ void Scene::parse(string configFile)
         auto pos_ = val["position"];
         auto position = new Vector3(pos_[0], pos_[1], pos_[2]);
 
-        if (type.compare("camera"))
+        if (type.compare("camera") == 0)
         {
-            auto dir = val["direction"];
-            auto up = val["up"];
+            auto dir_ = val["direction"];
+            auto up_ = val["up"];
 
-            cam_ = new Camera(
-                position,
-                new Vector3(dir[0], dir[1], dir[2]),
-                new Vector3(up[0], up[1], up[2]),
-                config["width"],
-                config["height"]);
+            auto dir = new Vector3(dir_[0], dir_[1], dir_[2]);
+            auto up = new Vector3(up_[0], up_[1], up_[2]);
+
+            cam_ = new Camera(position, dir, up, config["width"],
+                              config["height"]);
         }
-        else if (type.compare("light"))
+        else if (type.compare("light") == 0)
         {
             auto color = val["color"];
             auto intensity = val["intensity"];
 
-            lights_.push_back(new PointLight(position, new Color(color[0], color[1], color[2]), intensity));
+            lights_.push_back(new PointLight(
+                position, new Color(color[0], color[1], color[2]), intensity));
         }
-        else if (type.compare("sphere"))
+        else if (type.compare("sphere") == 0)
         {
             auto texture = textures[val["texture"]];
             float radius = val["radius"];
 
             objs_.push_back(new Sphere(radius, position, texture));
         }
-        else if (type.compare("plane"))
+        else if (type.compare("plane") == 0)
         {
             auto texture = textures[val["texture"]];
             auto norm_ = val["normal"];
@@ -194,9 +196,11 @@ void Scene::parse(string configFile)
 
             objs_.push_back(new Plane(position, normal, texture));
         }
-        else if (type.compare("triangle"))
+        else if (type.compare("triangle") == 0)
         {
-            auto texture = textures[val["texture"]];
+            string textureName = val["texture"];
+            auto texture = textures[textureName];
+
             auto v0_ = val["v0"];
             auto v1_ = val["v1"];
             auto v2_ = val["v2"];
@@ -237,8 +241,7 @@ Image Scene::render()
     Vector3 forward = cam_->getForward();
     Image image(w, h);
 
-    cout << endl
-         << "Rendering" << HIDE_CURSOR << endl;
+    cout << endl << "Rendering" << HIDE_CURSOR << endl;
     for (float y = 0.0; y < h; y++)
     {
         Vector3 tmp = forward.rotate(cam_->getRight(), (y - h / 2) * padY);
@@ -254,6 +257,7 @@ Image Scene::render()
 
             CastRayResult *res = castRay(Ray(cam_->getCenter(), pointing));
             SceneObject *object = res->object;
+
             Vector3 hit = res->hit;
 
             if (object != nullptr) // intersects
@@ -266,11 +270,10 @@ Image Scene::render()
                 image.setPixel(x, y, *BLACK);
             }
 
-            updateProgress(++step, size);
+            // updateProgress(++step, size);
         }
     }
 
-    cout << endl
-         << "Completed." << SHOW_CURSOR << endl;
+    cout << endl << "Completed." << SHOW_CURSOR << endl;
     return image;
 }

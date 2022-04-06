@@ -1,10 +1,5 @@
 #include "include/triangle.hh"
 
-const vector<Vector3> Triangle::getVertices() const
-{
-    return vector{*v0_, *v1_, *v2_};
-}
-
 float Triangle::doesIntersect(Ray ray)
 {
     // Möller–Trumbore implementation
@@ -36,7 +31,7 @@ float Triangle::doesIntersect(Ray ray)
     return -1;
 }
 
-Vector3 &Triangle::getNormal(Vector3 p)
+Vector3 Triangle::getNormal(Vector3 p)
 {
     Vector3 edge1 = *v1_ - *v0_;
     Vector3 edge2 = *v2_ - *v0_;

@@ -1,32 +1,32 @@
 {
     "width": 512,
     "height": 512,
-    "lightLoss": false,
-    "reflections": 1,
+    "lightLoss": true,
+    "reflections": 2,
     "objects": [
        {
           "type": "camera",
           "fov": 90,
           "position": [
-             12,
-             25,
+             -5,
+             0,
              0
           ],
           "direction": [
+             1,
              0,
-             -1,
              0
           ],
           "up": [
-             1,
              0,
+             1,
              0
           ]
        },
        {
           "type": "light",
           "position": [
-             12,
+             0,
              6,
              0
           ],
@@ -94,6 +94,7 @@
        {
           "type": "triangle",
           "texture": "objColor1",
+          "position": [0, 0, 0],
           "v0": [
              2,
              -1,

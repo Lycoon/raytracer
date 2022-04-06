@@ -4,7 +4,8 @@ class Plane : public SceneObject
 {
 public:
     Plane(Vector3 *position, Vector3 *normal, UniformTexture *texture)
-        : SceneObject(texture, "plane"), position_(position)
+        : SceneObject(texture, "plane")
+        , position_(position)
     {
         normal->normalize();
         normal_ = normal;
@@ -13,7 +14,7 @@ public:
     const Vector3 &getPosition() const;
 
     float doesIntersect(Ray ray);
-    Vector3 &getNormal(Vector3 p);
+    Vector3 getNormal(Vector3 p);
     TextureMaterial *getTexture(Vector3 p);
 
 private:

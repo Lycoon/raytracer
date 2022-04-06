@@ -20,7 +20,7 @@ float Plane::doesIntersect(Ray ray)
     return t;
 }
 
-Vector3 &Plane::getNormal(Vector3 p)
+Vector3 Plane::getNormal(Vector3 p)
 {
     return *normal_;
 }

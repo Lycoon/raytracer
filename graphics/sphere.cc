@@ -43,7 +43,7 @@ float Sphere::doesIntersect(Ray ray)
     }
 }
 
-Vector3 &Sphere::getNormal(Vector3 p)
+Vector3 Sphere::getNormal(Vector3 p)
 {
     Vector3 normal = p - *center_;
     normal.normalize();

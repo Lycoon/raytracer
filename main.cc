@@ -3,12 +3,6 @@
 #include "core/include/image.hh"
 #include "core/include/scene.hh"
 #include "core/include/turtle.hh"
-#include "graphics/include/box.hh"
-#include "graphics/include/mengen-sponge.hh"
-#include "graphics/include/plane.hh"
-#include "graphics/include/point-light.hh"
-#include "graphics/include/sphere.hh"
-#include "graphics/include/triangle.hh"
 
 using namespace std;
 
@@ -23,8 +17,8 @@ void loadDefaultScene(int width, int height, int fov, string outputName)
     Scene *scene = new Scene("config.json");
 
     // Turtle
-    Turtle turtle;
-    turtle.execute(scene, "grammars/little_plant.json");
+    // Turtle turtle;
+    // turtle.execute(scene, "grammars/little_plant.json");
 
     Image image = scene->render();
     image.save(outputName);
