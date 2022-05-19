@@ -1,8 +1,8 @@
-# Raytracer
+![Raytracer banner](./assets/banner.png)
 
-![alt text](./assets/banner.png)
-
-Basic raytracer written in C++.
+<p align="center">
+    Some raytracer including basic features such as shadows & reflection
+</p>
 
 ## Building
 
@@ -16,6 +16,10 @@ Building requires C++17 installed.
 ## Running
 
 - `./raytracer [width] [height] [fov] [outputName]`
+
+## Config
+
+The program can be run dynamically without recompiling when updating the scene. This can be done within the `config.json` file. Check the format to play with it.
 
 ## Features
 
