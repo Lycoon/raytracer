@@ -24,9 +24,6 @@ int main(int argc, char const *argv[])
 
     // Creating scene
     Scene *scene = new Scene("config.json");
-    Turtle turtle;
-    turtle.execute(scene, "grammars/cool_plant.json");
-
     Image image = scene->render();
     image.save(outputName);
 

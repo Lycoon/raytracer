@@ -1,5 +1,7 @@
 # Raytracer
 
+![alt text](./assets/banner.png)
+
 Basic raytracer written in C++.
 
 ## Building
@@ -16,11 +18,13 @@ Building requires C++17 installed.
 - `./raytracer [width] [height] [fov] [outputName]`
 
 ## Features
+
 - Diffuse and specular lighting
 - Shadows
 - Reflection
 
 ## Shapes
+
 - Sphere
 - Box
 - Plane
